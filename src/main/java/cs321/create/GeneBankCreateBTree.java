@@ -63,7 +63,6 @@ public class GeneBankCreateBTree
 
     private static void printUsageAndExit(String errorMessage)
     {
-        System.println.out();
         System.exit(1);
     }
 
