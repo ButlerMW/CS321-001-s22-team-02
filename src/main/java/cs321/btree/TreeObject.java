@@ -1,3 +1,5 @@
+package src.main.java.cs321.btree;
+
 
 public class TreeObject
 {
@@ -18,9 +20,10 @@ public class TreeObject
         frequency++;
     }
 
-    public String toString(long DNA, int numKeys){
-        return null;
+    public String toString(int numK){
+        return String.valueOf(DNA) + ":" + " " + frequency;
     }
+
 
 
 }
