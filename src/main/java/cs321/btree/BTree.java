@@ -1,16 +1,18 @@
-package cs321.btree;
+package src.main.java.cs321.btree;
+
 
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 public class BTree
 {
+
     private BTreeNode root;
     private int degree;
     private long nextAddress;
     private int sizeOfBTreeNode; // calulate
     private int numOfNodes;
 
-    public BTree(int degree)
+    public BTree(int degree)>>>>>>> master
     {
         root = new BTreeNode();
         this.degree = degree;
@@ -39,6 +41,7 @@ public class BTree
         boolean leaf;
         TreeObject[] keys = new TreeObject[2*degree + 2];
         long[] c = new long[2*degree + 1];  // key array size == 2t+1
+
 
         public void BTreeInsertNonFull(long key)
         {

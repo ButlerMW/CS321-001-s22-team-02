@@ -17,6 +17,36 @@ public class GeneBankCreateBTree
 
     }
 
+    /* Convert DNA to long */
+
+    public static long dnaToLong(String DNA){
+        long retVal = 0;
+
+        for(int i = 0; i < DNA.length(); i++){
+            char c = DNA.charAt(i);
+            if(c == 'a'){
+                retVal += 0;
+                retVal = retVal<<2;
+            }
+            else if(c == 't'){
+                retVal += 3;
+                retVal = retVal<<2;
+            }
+            else if(c == 'c'){
+                retVal += 1;
+                retVal = retVal<<2;
+            }
+            else if(c == 'g'){
+                retVal += 2;
+                retVal = retVal<<2;
+            }
+            else{
+                return -1;
+            }
+        }
+        
+    }
+
     private static GeneBankCreateBTreeArguments parseArgumentsAndHandleExceptions(String[] args)
     {
         GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = null;

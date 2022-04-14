@@ -1,27 +1,28 @@
-package cs321.btree;
+package src.main.java.cs321.btree;
+
 
 public class TreeObject
 {
-    private long key;
-    private int frequency = 0;
+    private long DNA;
+    private int frequency;
 
-    public TreeObject(long key)
-    {
-        this.key = key;
+    public TreeObject(long DNA){
+        this.frequency = 0;
+        this.DNA = DNA;
+
     }
 
-    public void incrementFrequency()
-    {
+    public long getDNA(){
+        return DNA;
+    }
+
+    public void increaseFrequency(){
         frequency++;
     }
 
-    public long getKey()
-    {
-        return key;
+    public String toString(int numK){
+        return String.valueOf(DNA) + ":" + " " + frequency;
     }
 
-    public int getFrequency()
-    {
-        return frequency;
-    }
+
 }
