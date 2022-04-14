@@ -12,7 +12,7 @@ public class BTreeTest
     //  assert that the constructed tree has the expected number of nodes and
     //  assert that some (or all) of the nodes have the expected values
     @Test
-    public void btreeDegree4Test()
+    public void btreeDegree2Test()
     {
 //        //TODO instantiate and populate a bTree object
 //        int expectedNumberOfNodes = TBD;
@@ -36,4 +36,18 @@ public class BTreeTest
 //        }
     }
 
+    @Test
+    public void emptyBTree_Add2_Add4_Add7_247()
+    {
+        BTree test = new BTree(2);
+        test.BTreeInsert(2);
+        test.BTreeInsert(4);
+        test.BTreeInsert(7);
+
+        String[] expectedNodesContent = new String[]{
+                "2, 4, 7", //root content
+        };
+
+        assertEquals(expectedNodesContent[0], test.getNodeAtIndex(0).toString());
+    }
 }
