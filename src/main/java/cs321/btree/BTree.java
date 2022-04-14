@@ -12,7 +12,7 @@ public class BTree
     private int sizeOfBTreeNode; // calulate
     private int numOfNodes;
 
-    public BTree(int degree)>>>>>>> master
+    public BTree(int degree)
     {
         root = new BTreeNode();
         this.degree = degree;
