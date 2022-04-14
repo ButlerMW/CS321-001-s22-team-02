@@ -80,7 +80,17 @@ public class BTree
 
         public void BTreeInsertNonFull(long key)
         {
-
+          int i = this.keys.length;
+          if(this.leaf)
+          {
+            while(i >= 1 && key < this.keys[i])
+            {
+              this.key[i+1] = this.key[i];
+              i = i - 1;
+            }
+            this.key[i] = key;
+            this.keys.length = this.keys.length + 1
+          }
         }
 
         public void BTreeSplitChild(int i)
