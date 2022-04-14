@@ -19,28 +19,35 @@ public class GeneBankCreateBTree
 
     /* Convert DNA to long */
 
-    public static long dnaToLong(String DNA){
+    public static long dnaToLong(String DNA)
+    {
         long retVal = 0;
 
-        for(int i = 0; i < DNA.length(); i++){
+        for(int i = 0; i < DNA.length(); i++)
+        {
             char c = DNA.charAt(i);
-            if(c == 'a'){
+            if(c == 'a')
+            {
                 retVal += 0;
                 retVal = retVal<<2;
             }
-            else if(c == 't'){
+            else if(c == 't')
+            {
                 retVal += 3;
                 retVal = retVal<<2;
             }
-            else if(c == 'c'){
+            else if(c == 'c')
+            {
                 retVal += 1;
                 retVal = retVal<<2;
             }
-            else if(c == 'g'){
+            else if(c == 'g')
+            {
                 retVal += 2;
                 retVal = retVal<<2;
             }
-            else{
+            else
+            {
                 return -1;
             }
         }
