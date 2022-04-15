@@ -13,13 +13,12 @@ public class BTree
   
   public BTree(int degree)
   {
-       this.degree = degree;
-        root = new BTreeNode(true, 0);
-        
 
-        nextAddress = 0;
-        int sizeOfBTreeNode = 1000; // calulate later
-        numOfNodes = 1;
+    this.degree = degree;
+    root = new BTreeNode(true, 0);    
+    nextAddress = 0;
+    int sizeOfBTreeNode = 1000; // calulate later
+    numOfNodes = 1;
   }
       
       public void BTreeInsert(long key)
