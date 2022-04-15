@@ -1,4 +1,4 @@
-package src.main.java.cs321.btree;
+package cs321.btree;
 
 
 public class TreeObject

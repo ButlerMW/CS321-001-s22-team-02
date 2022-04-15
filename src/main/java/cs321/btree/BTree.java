@@ -1,4 +1,4 @@
-package src.main.java.cs321.btree;
+package cs321.btree;
 
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
@@ -12,8 +12,9 @@ public class BTree
   
   public BTree(int degree)
   {
-        root = new BTreeNode();
-        this.degree = degree;
+       this.degree = degree;
+        root = new BTreeNode(true, 0);
+        
         nextAddress = 0;
         int sizeOfBTreeNode = 1000; // calulate later
         numOfNodes = 1;
@@ -34,14 +35,14 @@ public class BTree
           BTreeNode r = root;
           if(r.numKeys == 2*degree - 1)
           {
-              BTreeNode s = new BTreeNode();
-              nextAddress += sizeOfBTreeNode;
-              root = s;
-              s.leaf = false;
-              s.numKeys = 0; // nnope
-              s.c[1] = r.address; // nope
-              s.BTreeSplitChild(1);
-              s.BTreeInsertNonFull(key);
+              // BTreeNode s = new BTreeNode();
+              // nextAddress += sizeOfBTreeNode;
+              // root = s;
+              // s.leaf = false;
+              // s.numKeys = 0; // nnope
+              // s.c[1] = r.address; // nope
+              // s.BTreeSplitChild(1);
+              // s.BTreeInsertNonFull(key);
           }
           else
           {
@@ -72,27 +73,36 @@ public class BTree
 
     public class BTreeNode
     {
-        int size;
+        int size = 0;
         boolean leaf;
         TreeObject[] keys = new TreeObject[2*degree + 2];
-        int numKeys;
+        int numKeys = 0;
         long[] c = new long[2*degree + 1];  // key array size == 2t+1
         long address; 
+
+        public BTreeNode(boolean leaf, long address){
+          
+          this.leaf = leaf;
+          this.address = address;
+          
+
+
+        }
 
 
         public void BTreeInsertNonFull(long key)
         {
           // int i = this.keys.length;
-          int i = this.numKeys;
+          int i = this.size;
           if(this.leaf)
           {
-            while(i >= 1 && key < this.keys)
+            while(i >= 1 && key < this.keys[i].getDNA())
             {
               this.keys[i+1] = this.keys[i];
               i = i - 1;
             }
-            this.keys[i] = key;
-            this.keys.length = this.keys.length + 1;
+            this.keys[i+1] = new TreeObject(key);
+           size++;
           }
         }
 
@@ -125,10 +135,10 @@ public class BTree
 
         }
 
-        public BTreeNode DiskRead(long i) //static
-        {
+       // public BTreeNode DiskRead(long i) //static
+       // {
 
-        }
+       // }
 
         public String toString()
         {
@@ -136,7 +146,7 @@ public class BTree
             String result = "";
             while(i < keys.length && keys[i] != null)
             {
-                result += keys[i] + ", ";
+                result += keys[i].getDNA() + " ";
                 i++;
             }
                 return result;
