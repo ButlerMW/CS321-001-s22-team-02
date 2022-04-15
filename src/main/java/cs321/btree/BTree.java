@@ -32,13 +32,14 @@ public class BTree
           //      B-Tree-Insert-NonFull(s,k)
           // else B-Tree-Insert-Nonfull(r, k)
           BTreeNode r = root;
-          if(r.keys.length == 2*degree - 1)
+          if(r.numKeys == 2*degree - 1)
           {
-              BTreeNode s = ALLOCATE-NODE();
+              BTreeNode s = new BTreeNode();
+              nextAddress += sizeOfBTreeNode;
               root = s;
               s.leaf = false;
-              s.keys.length = 0;
-              s.c = r;
+              s.numKeys = 0; // nnope
+              s.c[1] = r.address; // nope
               s.BTreeSplitChild(1);
               s.BTreeInsertNonFull(key);
           }
@@ -74,22 +75,24 @@ public class BTree
         int size;
         boolean leaf;
         TreeObject[] keys = new TreeObject[2*degree + 2];
+        int numKeys;
         long[] c = new long[2*degree + 1];  // key array size == 2t+1
         long address; 
 
 
         public void BTreeInsertNonFull(long key)
         {
-          int i = this.keys.length;
+          // int i = this.keys.length;
+          int i = this.numKeys;
           if(this.leaf)
           {
-            while(i >= 1 && key < this.keys[i])
+            while(i >= 1 && key < this.keys)
             {
-              this.key[i+1] = this.key[i];
+              this.keys[i+1] = this.keys[i];
               i = i - 1;
             }
-            this.key[i] = key;
-            this.keys.length = this.keys.length + 1
+            this.keys[i] = key;
+            this.keys.length = this.keys.length + 1;
           }
         }
 
