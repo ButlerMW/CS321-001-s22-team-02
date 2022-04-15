@@ -4,6 +4,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 public class BTree
 {
+
   private BTreeNode root;
   private int degree;
   private long nextAddress;
@@ -15,6 +16,7 @@ public class BTree
        this.degree = degree;
         root = new BTreeNode(true, 0);
         
+
         nextAddress = 0;
         int sizeOfBTreeNode = 1000; // calulate later
         numOfNodes = 1;
