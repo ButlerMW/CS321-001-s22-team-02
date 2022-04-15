@@ -1,6 +1,4 @@
-package src.main.java.cs321.btree;
-
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
+package main.java.cs321.btree;
 
 public class BTree
 {
@@ -74,7 +72,7 @@ public class BTree
     {
         int size;
         boolean leaf;
-        TreeObject[] keys = new TreeObject[2*degree + 2];
+        src.main.java.cs321.btree.TreeObject[] keys = new src.main.java.cs321.btree.TreeObject[2*degree + 2];
         int numKeys;
         long[] c = new long[2*degree + 1];  // key array size == 2t+1
         long address; 
