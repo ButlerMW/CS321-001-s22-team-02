@@ -51,6 +51,7 @@ public class GeneBankCreateBTree
                 return -1;
             }
         }
+        return retVal;
         
     }
 
@@ -70,7 +71,7 @@ public class GeneBankCreateBTree
 
     private static void printUsageAndExit(String errorMessage)
     {
-
+        System.out.println("java GeneBankCreateBTree <0/1(no/with Cache)> <degree> <gbk file> <sequence length> [<cache size>] [<debug level>]");
         System.exit(1);
     }
 
