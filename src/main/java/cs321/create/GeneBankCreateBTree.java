@@ -1,4 +1,4 @@
-package cs321.create;
+package main.java.cs321.create;
 
 import cs321.common.ParseArgumentException;
 
@@ -7,11 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class GeneBankCreateBTree
 {
 
     public static void main(String[] args) throws Exception
     {
+        System.out.println(Parse("TEST"));
         System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
         cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
 
@@ -121,7 +123,7 @@ public class GeneBankCreateBTree
         return patterns;
     }
 
-    System.out.println(Parse("TEST"));
+
 
 
 
