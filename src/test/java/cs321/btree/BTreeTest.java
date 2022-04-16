@@ -52,15 +52,17 @@ public class BTreeTest
     }
 
     @Test
-    public void emptyBTree_Add7_Add4_Add2_247()
+    public void emptyBTree_Add2_Add4_Add7_Add8_2478()
     {
         BTree test = new BTree(2);
-        test.BTreeInsert(7);
-        test.BTreeInsert(4);
         test.BTreeInsert(2);
+        test.BTreeInsert(4);
+        test.BTreeInsert(7);
+        test.BTreeInsert(8);
 
         String[] expectedNodesContent = new String[]{
-                "2 4 7 ", //root content
+                "4 ", "2 ","7 8 "  //root content
+    
         };
 
         assertEquals(expectedNodesContent[0], test.getNodeAtIndex(0));
