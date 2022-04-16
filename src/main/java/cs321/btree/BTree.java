@@ -81,21 +81,23 @@ public class BTree
         }
         else
         {
-              while(i >= 1 && key < this.keys[i].getDNA())
-              {
-                  i--;
-              }
-              i++;
-//            DiskRead();
-              if(this.c[i] == 2*degree - 1)
-              {
-//                   this.BTreeSplitChild(i);
-                  if(key > this.keys[i].getDNA())
-                  {
-                      i++;
-                  }
-                  this.BTreeInsertNonFull(key);
-              
+
+          while(i >= 1 && key < this.keys[i].getDNA())
+          {
+              i--;
+          }
+          i++;
+          this.DiskRead(c[i]);
+          if(this.c[i] == 2*degree - 1)
+          {
+            this.BTreeSplitChild(i);
+            if(key > this.keys[i].getDNA())
+            {
+                i++;
+            }
+            this.BTreeInsertNonFull(key);
+          
+          }
         }
       }
 
