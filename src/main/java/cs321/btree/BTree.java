@@ -15,9 +15,8 @@ public class BTree
   
   public BTree(int degree)
   {
-
-    this.degree = degree;
-    root = new BTreeNode(true, 0);    
+    root = new BTreeNode(true, 0);
+    this.degree = degree;  
     nextAddress = 0;
     int sizeOfBTreeNode = 1000; // calulate later
     numOfNodes = 1;
@@ -76,28 +75,37 @@ public class BTree
 
     public class BTreeNode
     {
-        int size = 0;
+        int size;
         boolean leaf;
 
-        TreeObject[] keys = new TreeObject[2*degree + 2];
+        TreeObject[] keys = new TreeObject[2*degree];
         int numKeys = 0;
 
         long[] c = new long[2*degree + 1];  // key array size == 2t+1
         long address; 
 
-        public BTreeNode(boolean leaf, long address){
-          
+        public BTreeNode(boolean leaf, long address)
+        {
           this.leaf = leaf;
           this.address = address;
-          
+          size = 0;
+          numKeys = 0;
+          c = new long[2*degree +1]; // key array size == 2t + 1
+        }
 
-
+        public BTreeNode()
+        {
+          this.leaf = leaf;
+          this.address = address;
+          size = 0;
+          keys = new TreeObject[2*degree + 2];
+          numKeys = 0;
+          c = new long[2*degree +1]; // key array size == 2t + 1
         }
 
 
         public void BTreeInsertNonFull(long key)
         {
-          // int i = this.keys.length;
           int i = this.size;
           if(this.leaf)
           {
@@ -111,14 +119,15 @@ public class BTree
           }
         }
 
-        public void BTreeSplitChild(int i)
+        public void BTreeSplitChild(BTreeNode x, int i)
         {
-            // z = ALLOCATE-NODE()
-            // y = x.ci
-            // z.leaf = y.leaf
-            // z.n = t-1
-            // for j = 1 to t-1
-            //      z.keyj = y.keyj+t
+            BTreeNode z = new BTreeNode();
+            BTreeNode y = x.;
+            z.leaf = y.leaf;
+            z.numKeys = degree - 1;
+            for (int j = 1; j < degree - 1; j++) {
+                z.numKeys = y.numKeys + degree;
+            }
             // if not y.leaf
             //      for j = 1 to t
             //          z.cj = y.cj+t
@@ -131,8 +140,8 @@ public class BTree
             // x.keyi = y.keyt
             // x.n = x.n + 1
             // Disk-Write(y)
-            // Disk-Write(y)
-            // Disk-Write(y)
+            // Disk-Write(z)
+            // Disk-Write(x)
         }
 
         public void DiskWrite()
