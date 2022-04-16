@@ -34,34 +34,20 @@ public class BTree
     int sizeOfBTreeNode = 1000; // calulate later
     numOfNodes = 1;
   }
-
   
-      
   public void BTreeInsert(long key)
   {
-    // r = T.root
-    // if r.n == 2t - 1
-    //      s = ALLOCATE-NODE()
-    BTreeNode s = new BTreeNode(false, nextAddress);
-    nextAddress += sizeOfBTreeNode;
-    //      T.root = s
-    //      s.leaf = FALSE
-    //      s.n = 0
-    //      s.c1 = r
-    //      B-Tree-SplitChild(s, 1)
-    //      B-Tree-Insert-NonFull(s,k)
-    // else B-Tree-Insert-Nonfull(r, k)
     BTreeNode r = root;
     if(r.numKeys == 2*degree - 1)
-    {
-        // BTreeNode s = new BTreeNode();
-        // nextAddress += sizeOfBTreeNode;
-        // root = s;
-        // s.leaf = false;
-        // s.numKeys = 0; // nnope
-        // s.c[1] = r.address; // nope
-        // s.BTreeSplitChild(1);
-        // s.BTreeInsertNonFull(key);
+    {  
+      BTreeNode s = new BTreeNode(false, nextAddress);
+      nextAddress += sizeOfBTreeNode;
+      root = s;
+      s.leaf = false;
+      s.numKeys = 0; // nnope
+      s.c[1] = r.address; // nope
+      s.BTreeSplitChild(1);
+      s.BTreeInsertNonFull(key);
     }
     else
     {
@@ -71,24 +57,6 @@ public class BTree
 
   public String getNodeAtIndex(int index)
   {
-    //return root.toString();
-    /**
-     * if i < 1 
-     *  return error
-     * q = new queue()
-     * q.enqueue(root)
-     * while !q.isEmpty()
-     *  if(i ==j)
-     *    return n 
-     *  else 
-     *    i++
-     *  n = q.dequeue
-     * if !n.leaf
-     *  for each childPointer c in n 
-     *    child = DISK-READ(c)
-     *    q.enque(child);
-     */
-
      if(index < 1)
      {
       System.out.println("Error");
@@ -96,13 +64,15 @@ public class BTree
      Queue<BTreeNode> q = new LinkedList<>();
      q.add(root);
      int i = 1;
-     while( !q.isEmpty() ){
-
+     while( !q.isEmpty() )
+     {
         BTreeNode n = q.remove();
-        if(i == index){
+        if(i == index)
+        {
           return n.toString();
         }
-        else{
+        else
+        {
           i++;
         }
         if(n.leaf)
@@ -114,7 +84,6 @@ public class BTree
           }
         }
      }
-
      return null; 
   }
 
