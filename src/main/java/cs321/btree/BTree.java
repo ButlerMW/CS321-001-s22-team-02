@@ -119,34 +119,47 @@ public class BTree
           }
         }
 
-        public void BTreeSplitChild(BTreeNode x, int i)
+        public void BTreeSplitChild(int i)
         {
             BTreeNode z = new BTreeNode();
-            BTreeNode y = x.;
+            BTreeNode y = DiskRead(this.c[i]);
             z.leaf = y.leaf;
             z.numKeys = degree - 1;
-            for (int j = 1; j < degree - 1; j++) {
-                z.numKeys = y.numKeys + degree;
+            for (int j = 1; j <= degree - 1; j++) {
+                z.keys[j] = y.keys[j + degree];
             }
-            // if not y.leaf
-            //      for j = 1 to t
-            //          z.cj = y.cj+t
-            // y.n = t - 1
-            // for j = x.n + 1 downto i + 1
-            //      x.cj+1 = x.cj
-            // x.ci+1 = z
-            // for j = x.n + 1 downto i
-//                    x.keyj+1 = x.keyj
-            // x.keyi = y.keyt
-            // x.n = x.n + 1
-            // Disk-Write(y)
-            // Disk-Write(z)
-            // Disk-Write(x)
+            
+            if(y.leaf == false){
+              for(int j = 1; j <= degree; j++ ){
+                  z.c[j] = y.c[j + degree];
+              }
+            }
+
+            y.numKeys = degree - 1;
+            
+            for(int j = this.numKeys + 1; j >= i + 1; j--){
+                this.c[j + 1] = this.c[j];
+            }
+
+            this.c[i + 1] = z.address;
+
+            for (int j = this.numKeys; j >= i; j--){
+                this.keys[j + 1] = this.keys[j];
+            }
+            this.keys[i] = y.keys[degree];
+            this.numKeys++;
+            y.DiskWrite();
+            z.DiskWrite();
+            this.DiskWrite();
         }
 
         public void DiskWrite()
         {
 
+        }
+
+        public BTreeNode DiskRead(long address){
+          return null;
         }
 
        // public BTreeNode DiskRead(long i) //static
