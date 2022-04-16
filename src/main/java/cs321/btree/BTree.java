@@ -1,5 +1,8 @@
 
 package cs321.btree;
+import java.io.RandomAccessFile;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
@@ -15,6 +18,7 @@ public class BTree
   private long nextAddress;
   private int sizeOfBTreeNode; // calulate
   private int numOfNodes;
+  private RandomAccessFile raf;
 
   /*
     *
@@ -30,12 +34,16 @@ public class BTree
     int sizeOfBTreeNode = 1000; // calulate later
     numOfNodes = 1;
   }
+
+  
       
   public void BTreeInsert(long key)
   {
     // r = T.root
     // if r.n == 2t - 1
     //      s = ALLOCATE-NODE()
+    BTreeNode s = new BTreeNode(false, nextAddress);
+    nextAddress += sizeOfBTreeNode;
     //      T.root = s
     //      s.leaf = FALSE
     //      s.n = 0
@@ -63,7 +71,7 @@ public class BTree
 
   public String getNodeAtIndex(int index)
   {
-    return root.toString();
+    //return root.toString();
     /**
      * if i < 1 
      *  return error
@@ -80,16 +88,42 @@ public class BTree
      *    child = DISK-READ(c)
      *    q.enque(child);
      */
+
+     if(index < 1)
+     {
+      System.out.println("Error");
+     }
+     Queue<BTreeNode> q = new LinkedList<>();
+     q.add(root);
+     int i = 1;
+     while( !q.isEmpty() ){
+
+        BTreeNode n = q.remove();
+        if(i == index){
+          return n.toString();
+        }
+        else{
+          i++;
+        }
+        if(n.leaf)
+        {
+          for(int j = 1; j <= n.numKeys + 1; j++)
+          {
+            BTreeNode child = n.DiskRead(n.c[j]);
+            q.add(child);
+          }
+        }
+     }
+
+     return null; 
   }
 
   public class BTreeNode
   {
       int size;
       boolean leaf;
-
       TreeObject[] keys = new TreeObject[2*degree];
       int numKeys = 0;
-
       long[] c = new long[2*degree + 1];  // key array size == 2t+1
       long address; 
 
@@ -134,26 +168,26 @@ public class BTree
           BTreeNode y = DiskRead(this.c[i]);
           z.leaf = y.leaf;
           z.numKeys = degree - 1;
-          for (int j = 1; j <= degree - 1; j++) {
-              z.keys[j] = y.keys[j + degree];
+          for (int j = 1; j <= degree - 1; j++) 
+          {
+            z.keys[j] = y.keys[j + degree];
           }
-          
-          if(y.leaf == false){
-            for(int j = 1; j <= degree; j++ ){
-                z.c[j] = y.c[j + degree];
+          if(y.leaf == false)
+          {
+            for(int j = 1; j <= degree; j++ )
+            {
+              z.c[j] = y.c[j + degree];
             }
           }
-
           y.numKeys = degree - 1;
-          
-          for(int j = this.numKeys + 1; j >= i + 1; j--){
-              this.c[j + 1] = this.c[j];
+          for(int j = this.numKeys + 1; j >= i + 1; j--)
+          {
+            this.c[j + 1] = this.c[j];
           }
-
           this.c[i + 1] = z.address;
-
-          for (int j = this.numKeys; j >= i; j--){
-              this.keys[j + 1] = this.keys[j];
+          for (int j = this.numKeys; j >= i; j--)
+          {
+            this.keys[j + 1] = this.keys[j];
           }
           this.keys[i] = y.keys[degree];
           this.numKeys++;
