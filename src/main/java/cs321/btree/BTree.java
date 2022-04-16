@@ -107,7 +107,26 @@ public class BTree
               i = i - 1;
             }
             this.keys[i+1] = new TreeObject(key);
-           size++;
+            size++;
+            // DiskWrite();
+          }
+          else
+          {
+              while(i >= 1 && key < this.keys[i].getDNA())
+              {
+                  i--;
+              }
+              i++;
+//            DiskRead();
+              if(this.c[i] == 2*degree - 1)
+              {
+//                   this.BTreeSplitChild(i);
+                  if(key > this.keys[i].getDNA())
+                  {
+                      i++;
+                  }
+                  this.BTreeInsertNonFull(key);
+              }
           }
         }
 
