@@ -81,16 +81,21 @@ public class BTree
         }
         else
         {
-          while(i >= 1 && key < this.keys[i].getDNA())
-          {
-            i--;
-          }
-          i++;
-          this.DiskRead(c[i]);
-          if(this.size == 2*degree - 1)
-          {
-            
-          }
+              while(i >= 1 && key < this.keys[i].getDNA())
+              {
+                  i--;
+              }
+              i++;
+//            DiskRead();
+              if(this.c[i] == 2*degree - 1)
+              {
+//                   this.BTreeSplitChild(i);
+                  if(key > this.keys[i].getDNA())
+                  {
+                      i++;
+                  }
+                  this.BTreeInsertNonFull(key);
+              
         }
       }
 
@@ -150,6 +155,7 @@ public class BTree
           {
               result += keys[i].getDNA() + " ";
               i++;
+
           }
               return result;
       }

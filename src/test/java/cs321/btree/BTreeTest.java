@@ -62,6 +62,7 @@ public class BTreeTest
 
         String[] expectedNodesContent = new String[]{
                 "4 ", "2 ","7 8 "  //root content
+    
         };
 
         assertEquals(expectedNodesContent[0], test.getNodeAtIndex(0));
