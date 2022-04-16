@@ -75,7 +75,22 @@ public class BTree
             i = i - 1;
           }
           this.keys[i+1] = new TreeObject(key);
-          size++;
+          this.size++;
+          this.DiskWrite();
+
+        }
+        else
+        {
+          while(i >= 1 && key < this.keys[i].getDNA())
+          {
+            i--;
+          }
+          i++;
+          this.DiskRead(c[i]);
+          if(this.size == 2*degree - 1)
+          {
+            
+          }
         }
       }
 
@@ -194,5 +209,6 @@ public class BTree
   }
 
   
+
 }
 
