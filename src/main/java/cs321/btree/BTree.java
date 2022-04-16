@@ -3,7 +3,6 @@ package cs321.btree;
 import java.io.RandomAccessFile;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /*
@@ -20,6 +19,7 @@ public class BTree
   private int numOfNodes;
   private RandomAccessFile raf;
 
+
   /*
     *
     * BTree constructor
@@ -33,58 +33,6 @@ public class BTree
     nextAddress = 0;
     int sizeOfBTreeNode = 1000; // calulate later
     numOfNodes = 1;
-  }
-  
-  public void BTreeInsert(long key)
-  {
-    BTreeNode r = root;
-    if(r.numKeys == 2*degree - 1)
-    {  
-      BTreeNode s = new BTreeNode(false, nextAddress);
-      nextAddress += sizeOfBTreeNode;
-      root = s;
-      s.leaf = false;
-      s.numKeys = 0; // nnope
-      s.c[1] = r.address; // nope
-      s.BTreeSplitChild(1);
-      s.BTreeInsertNonFull(key);
-    }
-    else
-    {
-      r.BTreeInsertNonFull(key);
-    }
-  }
-
-  public String getNodeAtIndex(int index)
-  {
-     if(index < 1)
-     {
-      System.out.println("Error");
-     }
-     Queue<BTreeNode> q = new LinkedList<>();
-     q.add(root);
-     int i = 1;
-     while( !q.isEmpty() )
-     {
-        BTreeNode n = q.remove();
-        if(i == index)
-        {
-          return n.toString();
-        }
-        else
-        {
-          i++;
-        }
-        if(n.leaf)
-        {
-          for(int j = 1; j <= n.numKeys + 1; j++)
-          {
-            BTreeNode child = n.DiskRead(n.c[j]);
-            q.add(child);
-          }
-        }
-     }
-     return null; 
   }
 
   public class BTreeNode
@@ -192,10 +140,59 @@ public class BTree
       }
 
   }
+  
+  public void BTreeInsert(long key)
+  {
+    BTreeNode r = root;
+    if(r.numKeys == 2*degree - 1)
+    {  
+      BTreeNode s = new BTreeNode(false, nextAddress);
+      nextAddress += sizeOfBTreeNode;
+      root = s;
+      s.leaf = false;
+      s.numKeys = 0; // nnope
+      s.c[1] = r.address; // nope
+      s.BTreeSplitChild(1);
+      s.BTreeInsertNonFull(key);
+    }
+    else
+    {
+      r.BTreeInsertNonFull(key);
+    }
+  }
 
+  public String getNodeAtIndex(int index)
+  {
+     if(index < 1)
+     {
+      System.out.println("Error");
+     }
+     Queue<BTreeNode> q = new LinkedList<>();
+     q.add(root);
+     int i = 1;
+     while( !q.isEmpty() )
+     {
+        BTreeNode n = q.remove();
+        if(i == index)
+        {
+          return n.toString();
+        }
+        else
+        {
+          i++;
+        }
+        if(n.leaf)
+        {
+          for(int j = 1; j <= n.numKeys + 1; j++)
+          {
+            BTreeNode child = n.DiskRead(n.c[j]);
+            q.add(child);
+          }
+        }
+     }
+     return null; 
+  }
 
-
-
-
+  
 }
 
