@@ -1,18 +1,21 @@
-package cs321.create;
+package main.java.cs321.create;
 
-import cs321.btree.BTree;
 import cs321.common.ParseArgumentException;
 
-import java.io.*;
+import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
+
 
 public class GeneBankCreateBTree
 {
 
     public static void main(String[] args) throws Exception
     {
+        System.out.println(Parse("TEST"));
         System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
-        GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
+        cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
 
 
     }
@@ -51,13 +54,12 @@ public class GeneBankCreateBTree
                 return -1;
             }
         }
-        return retVal;
-        
+        return-1;
     }
 
-    private static GeneBankCreateBTreeArguments parseArgumentsAndHandleExceptions(String[] args)
+    private static cs321.create.GeneBankCreateBTreeArguments parseArgumentsAndHandleExceptions(String[] args)
     {
-        GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = null;
+        cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = null;
         try
         {
             geneBankCreateBTreeArguments = parseArguments(args);
@@ -71,13 +73,58 @@ public class GeneBankCreateBTree
 
     private static void printUsageAndExit(String errorMessage)
     {
-        System.out.println("java GeneBankCreateBTree <0/1(no/with Cache)> <degree> <gbk file> <sequence length> [<cache size>] [<debug level>]");
+
         System.exit(1);
     }
 
-    public static GeneBankCreateBTreeArguments parseArguments(String[] args) throws ParseArgumentException
+    public static cs321.create.GeneBankCreateBTreeArguments parseArguments(String[] args) throws ParseArgumentException
     {
         return null;
     }
+
+    public static List <String> Parse (String name){
+        File file = new File (name);
+        Scanner scan = new Scanner (name);
+        List segments = new LinkedList();
+        while (scan.hasNextLine()){
+            String line = scan.nextLine();
+            if (line.contains("ORIGIN")){
+                scan.useDelimiter("[^ACTG/]+");
+                while (scan.hasNext()) {
+                    String str = scan.next();
+                    if (!str.equals("/")) {
+                        segments.add(str);
+                    }
+                    else {
+                        break;
+                    }
+                }
+                scan.useDelimiter("\n");
+            }
+        }
+        return segments;
+    }
+
+    public static List <String> getPatterns(int len, String sequence){
+        List patterns = new LinkedList();
+        int subStart = 0;
+        int subEnd = len - 1;
+
+        if (len > sequence.length()){
+            return null;
+        }
+
+        for (int i = len-1; i < sequence.length(); i++){
+            patterns.add(sequence.substring(subStart, subEnd));
+            subStart++;
+            subEnd++;
+        }
+
+        return patterns;
+    }
+
+
+
+
 
 }
