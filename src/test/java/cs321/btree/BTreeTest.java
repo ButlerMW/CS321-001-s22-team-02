@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class BTreeTest
 {
     // HINT:
@@ -37,9 +40,9 @@ public class BTreeTest
     }
 
     @Test
-    public void emptyBTree_Add2_Add4_Add7_247()
+    public void emptyBTree_Add2_Add4_Add7_247() throws IOException
     {
-        BTree test = new BTree(2);
+        BTree test = new BTree(2, "TEST");
         test.BTreeInsert(2);
         test.BTreeInsert(4);
         test.BTreeInsert(7);
@@ -52,9 +55,9 @@ public class BTreeTest
     }
 
     @Test
-    public void emptyBTree_Add2_Add4_Add7_Add8_2478()
+    public void emptyBTree_Add2_Add4_Add7_Add8_2478() throws IOException
     {
-        BTree test = new BTree(2);
+        BTree test = new BTree(2, "TEST");
         test.BTreeInsert(2);
         test.BTreeInsert(4);
         test.BTreeInsert(7);
