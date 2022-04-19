@@ -50,7 +50,7 @@ public class BTree
   public class BTreeNode
   {
       int size = 0; // number of keys
-      boolean leaf;
+      boolean isLeaf;
       TreeObject[] keys = new TreeObject[2*degree];
       // int numKeys = 0;
       long[] c = new long[2*degree + 1];  // key array size == 2t+1
@@ -62,7 +62,7 @@ public class BTree
        */
       public BTreeNode()
       {
-        this.leaf = leaf;
+        this.isLeaf = isLeaf;
         this.address = address;
         size = 0;
         keys = new TreeObject[2*degree + 2];
@@ -81,7 +81,7 @@ public class BTree
         raf.seek(address);
         this.size = raf.readInt();
         this.address = raf.readLong();
-        this.leaf = raf.readBoolean();
+        this.isLeaf = raf.readBoolean();
 
         for(int i = 1; i <= size; i++) 
         {
@@ -90,7 +90,7 @@ public class BTree
           keys[i] = new TreeObject(l, x);
         }
 
-        if(!leaf)
+        if(!isLeaf)
         {
           for(int i = 1; i <= size+1; i++) 
           {
@@ -103,14 +103,14 @@ public class BTree
       /**
        * BTreeNode Contstructor
        * 
-       * @param leaf
+       * @param isLeaf
        * @param address
        * @param fileName
        * @throws FileNotFoundException
        */
-      public BTreeNode(boolean leaf, long address) throws FileNotFoundException
+      public BTreeNode(boolean isLeaf, long address) throws FileNotFoundException
       {
-        this.leaf = leaf;
+        this.isLeaf = isLeaf;
         this.address = address;
         size = 0;
         // numKeys = 0;
@@ -118,7 +118,7 @@ public class BTree
       }
 
       /**
-       * BTreeNode Constructor without leaf boolean
+       * BTreeNode Constructor without isLeaf boolean
        * @param address
        * @param fileName
        * @throws IOException
@@ -144,7 +144,7 @@ public class BTree
       {
           System.out.println(this.size);
           int i = this.size;
-          if(this.leaf)
+          if(this.isLeaf)
         {
           while(i >= 1 && key < this.keys[i].getDNA())
           {
@@ -185,13 +185,13 @@ public class BTree
       {
           BTreeNode z = new BTreeNode();
           BTreeNode y = new BTreeNode(this.c[i]);
-          z.leaf = y.leaf;
+          z.isLeaf = y.isLeaf;
           z.size = degree - 1;
           for (int j = 1; j <= degree - 1; j++) 
           {
             z.keys[j] = y.keys[j + degree];
           }
-          if(y.leaf == false)
+          if(y.isLeaf == false)
           {
             for(int j = 1; j <= degree; j++ )
             {
@@ -227,7 +227,7 @@ public class BTree
           raf.seek(address);
           raf.writeInt(size);
           raf.writeLong(address); // key
-          raf.writeBoolean(leaf);
+          raf.writeBoolean(isLeaf);
 
           for(int i = 1; i <= size; i++) 
           {
@@ -235,7 +235,7 @@ public class BTree
             raf.writeInt(keys[i].getFrequency());
           }
 
-          if(!leaf)
+          if(!isLeaf)
           {
             for(int i = 1; i <= size+1; i++) 
             {
@@ -283,7 +283,7 @@ public class BTree
       BTreeNode s = new BTreeNode(false, nextAddress);
       nextAddress += sizeOfBTreeNode;
       root = s;
-      s.leaf = false;
+      s.isLeaf = false;
       s.size = 0; 
       s.c[1] = r.address;
       s.BTreeSplitChild(1);
@@ -321,7 +321,7 @@ public class BTree
         {
           i++;
         }
-        if(n.leaf)
+        if(n.isLeaf)
         {
           for(int j = 1; j <= n.size + 1; j++)
           {
