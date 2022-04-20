@@ -21,6 +21,7 @@ public class BTree
   private int numOfNodes;
 //  private RandomAccessFile raf;
   private FileChannel fc;
+  private Cache BTreeCache;
 
     /**
    * BTree Contstructor
@@ -28,13 +29,14 @@ public class BTree
    * @param file
    * @throws FileNotFoundException
    */
-  public BTree(int degree, String file) throws FileNotFoundException
+  public BTree(int degree, String file, int cacheSize) throws FileNotFoundException
   {
-      this.degree = degree;
-      root = new BTreeNode(true, 0);
+    this.degree = degree;
+    root = new BTreeNode(true, 0);
     //nextAddress = 0;
     int sizeOfBTreeNode = 1000; // calulate later
     numOfNodes = 1;
+    this.BTreeCache = new Cache<>(cacheSize);
     
     try
     {
@@ -256,7 +258,7 @@ public class BTree
       public void DiskWrite() //BTreeNode, int offset...
       {
         // int i = 0;
-          ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);
+        ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);
         try
         {
           // RandomAccessFile raf = file; // file cannot be resolved to a variable Java(33554515)
