@@ -60,7 +60,6 @@ public class BTree
       TreeObject[] keys = new TreeObject[2*degree];
       long address;
       long c[] = new long[2*degree + 1];
-
       /**
        * Default BtreeNode contructor
        */
@@ -87,6 +86,7 @@ public class BTree
             BTreeCache.AddToCache(address, node);
             this.size = node.size;
             this.address = node.address;
+            this.keys = node.keys;
           }
         }
         // return null;
