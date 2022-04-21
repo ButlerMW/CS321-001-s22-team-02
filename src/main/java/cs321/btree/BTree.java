@@ -21,7 +21,7 @@ public class BTree
   private int numOfNodes;
 //  private RandomAccessFile raf;
   private FileChannel fc;
-  private Cache BTreeCache;
+  private Cache<Long, BTreeNode> BTreeCache;
 
     /**
    * BTree Contstructor
@@ -57,12 +57,8 @@ public class BTree
   {
       int size = 0; // number of keys
       boolean isLeaf;
-      TreeObject[] keys = new TreeObject[2*degree];
-      // int numKeys = 0;
-      long[] c = new long[2*degree + 1];  // key array size == 2t+1
-      long address; 
-      long parent;
-      
+      TreeObject[] D;
+      long address;
       /**
        * Default BtreeNode contructor
        */
@@ -83,6 +79,15 @@ public class BTree
        */
       public BTreeNode(long address) throws IOException
       {
+        if(BTreeCache.getSize() > 0){
+          BTreeNode node = BTreeCache.removeFromCache(address);
+          if(node != null){
+            BTreeCache.AddToCache(address, node);
+            this.size = node.size;
+            this.address = node.address;
+            this.
+          }
+        }
         // return null;
         fc.position(address);
           ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);

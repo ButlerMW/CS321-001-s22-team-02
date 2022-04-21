@@ -21,6 +21,11 @@ public class Cache<T, E> // T = search key E = what to store
     this.storedKeys = new LinkedList<E>();
   }
 
+  public int getSize()
+  {
+    return size;
+  }
+
   /**
    * Add to Cheche Linked List
    * @param searchKey
@@ -47,11 +52,15 @@ public class Cache<T, E> // T = search key E = what to store
    */
   public E removeFromCache(T target)
   {
-    if(searchKeys.indexOf(target) < 0)
+
+    int index =  searchKeys.indexOf(target);
+    if(index < 0)
     {
       return null;
     }
-    return storedKeys.remove(searchKeys.indexOf(target));
+
+    searchKeys.remove(index);
+    return storedKeys.remove(index);
   }
 
   /**
