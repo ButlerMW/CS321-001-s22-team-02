@@ -86,6 +86,7 @@ public class BTree
             BTreeCache.AddToCache(address, node);
             this.size = node.size;
             this.address = node.address;
+            this.keys = node.keys;
           }
         }
         // return null;
