@@ -9,11 +9,21 @@ public class TreeObject
     public TreeObject(long DNA){
         this.frequency = 0;
         this.DNA = DNA;
-
+    }
+    
+    public TreeObject(long DNA, int frequency)
+    {
+      this.frequency = frequency;
+      this.DNA = DNA;
     }
 
     public long getDNA(){
         return DNA;
+    }
+
+    public int getFrequency()
+    {
+      return frequency;
     }
 
     public void increaseFrequency(){
