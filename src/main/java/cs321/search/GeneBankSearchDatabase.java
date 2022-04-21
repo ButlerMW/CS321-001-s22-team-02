@@ -1,8 +1,4 @@
-package cs321.search;
-
-import cs321.btree.BTree;
-import cs321.common.ParseArgumentException;
-import cs321.common.ParseArgumentUtils;
+package main.java.cs321.search;
 
 public class GeneBankSearchDatabase
 {

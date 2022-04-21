@@ -114,6 +114,10 @@ public class GeneBankCreateBTree
             return null;
         }
 
+        if (len < 31 || len > 1){
+            return null;
+        }
+
         for (int i = len-1; i < sequence.length(); i++){
             patterns.add(sequence.substring(subStart, subEnd));
             subStart++;

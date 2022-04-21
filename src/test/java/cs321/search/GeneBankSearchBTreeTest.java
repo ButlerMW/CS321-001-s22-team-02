@@ -1,9 +1,4 @@
-package cs321.search;
-
-import cs321.common.ParseArgumentException;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+package test.java.cs321.search;
 
 public class GeneBankSearchBTreeTest
 {

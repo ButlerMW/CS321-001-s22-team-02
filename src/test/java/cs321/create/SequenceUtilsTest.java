@@ -1,26 +1,45 @@
-package cs321.create;
+package test.java.cs321.create;
 
-import cs321.Utils;
-import org.junit.Test;
+import main.java.cs321.create.GeneBankCreateBTree;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 
 public class SequenceUtilsTest
-{
-    @Test
-    public void longToDNAStringTest() throws Exception
-    {
-	}
+{	public static void main(String[] args){
 
-    @Test
-    public void DNAStringToLongTest() throws Exception
-    {
-	}
+        List <String> l = GeneBankCreateBTree.getPatterns(3, "TAGCTAAC");
+        List <String> e = new LinkedList<>();
 
-	@Test
-	public void getComplementTest() throws Exception
-	{
-	}
+        e.add("TAG");
+        e.add("AGC");
+        e.add("GCT");
+        e.add("CTA");
+        e.add("TAA");
+        e.add("AAC");
+
+        for (int i = 0; i < e.size(); i++){
+            System.out.println(l.get(i) + " " + e.get(i) + " " + (l.get(i) == e.get(i)));
+
+        }
+
+
+
+
+
+//        List <String> Tst = GeneBankCreateBTree.Parse("TEST");
+//        List <String> Exp = new LinkedList<>();
+//
+//        Exp.add("ACGCT");
+//        Exp.add("ACT");
+//
+//        for (int i = 0; i < Exp.size(); i++){
+//            System.out.println(Tst.get(i) + " " + Exp.get(i) + " " + (Tst.get(i) == Exp.get(i)));
+//
+//        }
+
+
+    }
 }
+
