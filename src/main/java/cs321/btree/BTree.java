@@ -57,8 +57,9 @@ public class BTree
   {
       int size = 0; // number of keys
       boolean isLeaf;
-      TreeObject[] D;
+      TreeObject[] keys;
       long address;
+      long c[];
       /**
        * Default BtreeNode contructor
        */
@@ -85,7 +86,6 @@ public class BTree
             BTreeCache.AddToCache(address, node);
             this.size = node.size;
             this.address = node.address;
-            this.
           }
         }
         // return null;
