@@ -48,7 +48,7 @@ public class TreeObject
             if(biString.substring(i, i + 2).equals("01")){
                 retVal += "C";
             }
-            if(biString.substring(i, i + 2).equals("11")){
+            if(biString.substring(i, i + 2).equals("10")){
                 retVal += "G";
             }
 
