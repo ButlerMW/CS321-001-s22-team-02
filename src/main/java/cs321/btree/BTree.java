@@ -59,7 +59,7 @@ public class BTree
       boolean isLeaf;
       TreeObject[] keys = new TreeObject[2*degree];
       long address;
-      long c[] = new long[2*degree + 1];
+      long child[] = new long[2*degree + 1];
       /**
        * Default BtreeNode contructor
        */
@@ -70,7 +70,7 @@ public class BTree
         size = 0;
         keys = new TreeObject[2*degree + 2];
         // numKeys = 0;
-        c = new long[2*degree +1]; // key array size == 2t + 1
+        child = new long[2*degree +1]; // key array size == 2t + 1
       }
       
    /**
@@ -126,7 +126,7 @@ public class BTree
           for(int i = 1; i <= size+1; i++) 
           {
 //            c[i] = raf.readLong();
-              c[i] = bb.getLong();
+              child[i] = bb.getLong();
             // raf.writeInt(c[i].getFrequency());
           }
         }
@@ -145,7 +145,7 @@ public class BTree
         this.address = address;
         size = 0;
         // numKeys = 0;
-        c = new long[2*degree +1]; // key array size == 2t + 1
+        child = new long[2*degree +1]; // key array size == 2t + 1
       }
 
       /**
@@ -202,15 +202,15 @@ public class BTree
             }
               i++;
               // DiskRead();
-              BTreeNode b = new BTreeNode(c[i]);
+              BTreeNode b = new BTreeNode(child[i]);
             if(b.size == 2*degree - 1)
             {
               this.BTreeSplitChild(i);
-              b = new BTreeNode(c[i]);
+              b = new BTreeNode(child[i]);
                 if(key > this.keys[i].getDNA())
               {
                 i++;
-                b = new BTreeNode(c[i]);
+                b = new BTreeNode(child[i]);
               }
             }
               b.BTreeInsertNonFull(key);
@@ -227,7 +227,7 @@ public class BTree
           BTreeNode z = new BTreeNode();
           z.address = nextAddress;
           nextAddress += sizeOfBTreeNode;
-          BTreeNode y = new BTreeNode(this.c[i]);
+          BTreeNode y = new BTreeNode(this.child[i]);
           z.isLeaf = y.isLeaf;
           z.size = degree - 1;
           for (int j = 1; j <= degree - 1; j++) 
@@ -238,15 +238,15 @@ public class BTree
           {
             for(int j = 1; j <= degree; j++ )
             {
-              z.c[j] = y.c[j + degree];
+              z.child[j] = y.child[j + degree];
             }
           }
           y.size = degree - 1;
           for(int j = this.size + 1; j >= i + 1; j--)
           {
-            this.c[j + 1] = this.c[j];
+            this.child[j + 1] = this.child[j];
           }
-          this.c[i + 1] = z.address;
+          this.child[i + 1] = z.address;
           for (int j = this.size; j >= i; j--)
           {
             this.keys[j + 1] = this.keys[j];
@@ -298,7 +298,7 @@ public class BTree
             for(int i = 1; i <= size+1; i++) 
             {
 //              raf.writeLong(c[i]);
-                bb.putLong(c[i]);
+                bb.putLong(child[i]);
               // raf.writeInt(c[i].getFrequency());
             }
           }
@@ -344,7 +344,7 @@ public class BTree
       root = s;
       s.isLeaf = false;
       s.size = 0; 
-      s.c[1] = r.address;
+      s.child[1] = r.address;
       s.BTreeSplitChild(1);
       s.BTreeInsertNonFull(key);
     }
@@ -385,7 +385,7 @@ public class BTree
           for(int j = 1; j <= n.size + 1; j++)
           {
             // BTreeNode child = n.DiskRead(n.c[j]);
-            BTreeNode child = new BTreeNode(n.c[j]);
+            BTreeNode child = new BTreeNode(n.child[j]);
             q.add(child);
           }
         }
