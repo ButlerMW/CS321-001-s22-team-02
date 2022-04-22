@@ -19,7 +19,7 @@ public class BTree
   private long nextAddress = 1000;
   private int sizeOfBTreeNode = 1000; // calulate
   private int numOfNodes;
-//  private RandomAccessFile raf;
+  private RandomAccessFile raf;
   private FileChannel fc;
   private Cache<Long, BTreeNode> BTreeCache;
 
@@ -40,8 +40,10 @@ public class BTree
     
     try
     {
-      RandomAccessFile raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-        fc = raf.getChannel();
+      //RandomAccessFile raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
+       raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
+   
+      fc = raf.getChannel();
     }
     catch (Exception e)
     {
@@ -90,34 +92,34 @@ public class BTree
           }
         }
         // return null;
-        fc.position(address);
-          ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);
-          fc.read(bb);
-          bb.flip();
-          bb.position(0);
-//          raf.seek(address);
-//          this.size = raf.readInt();
-          this.size = bb.getInt();
-//          this.address = raf.readLong();
-          this.address = bb.getLong();
-//          this.leaf = raf.readBoolean();
+        //fc.position(address);
+        //  ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);
+        //  fc.read(bb);
+        //  bb.flip();
+        //  bb.position(0);
+          raf.seek(address);
+          this.size = raf.readInt();
+//          this.size = bb.getInt();
+          this.address = raf.readLong();
+//          this.address = bb.getLong();
+          this.isLeaf = raf.readBoolean();
 
           // if statement to get leaf boolean
-          if(bb.getChar() == 'T')
-          {
-              this.isLeaf = true;
-          }
-          else
-          {
-              this.isLeaf = false;
-          }
+          // if(bb.getChar() == 'T')
+          // {
+          //     this.isLeaf = true;
+          // }
+          // else
+          // {
+          //     this.isLeaf = false;
+          // }
 
         for(int i = 1; i <= size; i++) 
         {
-//          long l = raf.readLong();
-            long l = bb.getLong();
-//          int x = raf.readInt();
-            int x = bb.getInt();
+          long l = raf.readLong();
+            //long l = bb.getLong();
+          int x = raf.readInt();
+            //int x = bb.getInt();
           keys[i] = new TreeObject(l, x);
         }
 
@@ -125,8 +127,8 @@ public class BTree
         {
           for(int i = 1; i <= size+1; i++) 
           {
-//            c[i] = raf.readLong();
-              child[i] = bb.getLong();
+            child[i] = raf.readLong();
+//              child[i] = bb.getLong();
             // raf.writeInt(c[i].getFrequency());
           }
         }
@@ -156,7 +158,7 @@ public class BTree
        */
       public BTreeNode(long address, String fileName) throws IOException
       {
-//        raf.seek(address);
+        raf.seek(address);
           ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);
           fc.read(bb);
           bb.flip();
@@ -268,41 +270,42 @@ public class BTree
         try
         {
           // RandomAccessFile raf = file; // file cannot be resolved to a variable Java(33554515)
-//          raf.seek(address);
-            fc.position(address);
-//          raf.writeInt(size);
-            bb.putInt(size);
-//          raf.writeLong(address); // key
-            bb.putLong(nextAddress);
-//          raf.writeBoolean(leaf);
+          raf.seek(address);
+//            fc.position(address);
+          raf.writeInt(size);
+//            bb.putInt(size);
+          raf.writeLong(address); // key
+//            bb.putLong(nextAddress);
+          raf.writeBoolean(isLeaf);
             if(isLeaf)
             {
-                bb.putChar('T'); // true
+                //bb.putChar('T'); // true
             }
             else
             {
-                bb.putChar('F'); // false
+                //bb.putChar('F'); // false
             }
 
           for(int i = 1; i <= size; i++) 
           {
-//            raf.writeLong(keys[i].getDNA());
+           // raf.writeLong(keys[i].getDNA());
 
-              bb.putLong(keys[i].getDNA());
-//            raf.writeInt(keys[i].getFrequency());
-              bb.putInt(keys[i].getFrequency());
+//              bb.putLong(keys[i].getDNA());
+            raf.writeLong(keys[i].getDNA());
+            raf.writeInt(keys[i].getFrequency());
+//              bb.putInt(keys[i].getFrequency());
           }
 
           if(!isLeaf)
           {
             for(int i = 1; i <= size+1; i++) 
             {
-//              raf.writeLong(c[i]);
-                bb.putLong(child[i]);
-              // raf.writeInt(c[i].getFrequency());
+              raf.writeLong(child[i]);
+ //               bb.putLong(child[i]);
+             //  raf.writeInt(child[i].getFrequency());
             }
           }
-            fc.write(bb);
+           // fc.write(bb);
         }
         catch (IOException ioe)
         {

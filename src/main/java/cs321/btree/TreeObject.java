@@ -30,8 +30,31 @@ public class TreeObject
         frequency++;
     }
 
+
     public String toString(int numK){
-        return String.valueOf(DNA) + ":" + " " + frequency;
+
+        String retVal = "";
+        String biString = Long.toBinaryString(DNA);
+        while(biString.length() < 2*numK){
+            biString = "0" + biString;
+        }
+        for(int i = 0; i < biString.length(); i+=2){
+            if(biString.substring(i, i + 2).equals("00")){
+                retVal += "A";
+            }
+            if(biString.substring(i, i + 2).equals("11")){
+                retVal += "T";
+            }
+            if(biString.substring(i, i + 2).equals("01")){
+                retVal += "C";
+            }
+            if(biString.substring(i, i + 2).equals("11")){
+                retVal += "G";
+            }
+
+        }
+
+        return retVal + ":" + " " + frequency;
     }
 
 
