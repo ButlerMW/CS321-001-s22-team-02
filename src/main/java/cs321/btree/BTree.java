@@ -2,6 +2,7 @@
 package cs321.btree;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -50,6 +51,47 @@ public class BTree
       System.err.println("Error");
       System.exit(1);
     }
+  }
+
+
+  public void dump(String filename) throws IOException{
+    PrintStream ps = new PrintStream(filename);
+    PrintStream stdout = System.out;
+
+    dumpNode(root, ps);     
+
+    System.setOut(ps);
+    System.setOut(stdout);
+    
+  }
+
+  public void dumpNode(BTreeNode node,PrintStream ps ) throws IOException{
+
+    if(node.isLeaf){
+      for(int i = 1; i <= node.size; i++){
+        BTreeNode leafNode = new BTreeNode(node.child[i]);
+        dumpNode(leafNode, ps);
+        ps.append(node.keys[i].toString());
+        ps.append("\n");
+      }
+
+      return; 
+    }
+
+    for(int i = 1; i <= node.size; i++){
+      BTreeNode child = new BTreeNode(node.child[i]);
+      dumpNode(child, ps);
+      ps.append(node.keys[i].toString());
+      ps.append("\n");
+    }
+
+    for(int i = 1; i <= node.size; i++){
+      BTreeNode rChild = new BTreeNode(node.child[node.size + 1]);
+      dumpNode(rChild, ps);
+      ps.append(node.keys[i].toString());
+      ps.append("\n");
+    }
+
   }
 
   /**

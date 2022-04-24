@@ -40,16 +40,16 @@ public class TreeObject
         }
         for(int i = 0; i < biString.length(); i+=2){
             if(biString.substring(i, i + 2).equals("00")){
-                retVal += "A";
+                retVal += "a";
             }
             if(biString.substring(i, i + 2).equals("11")){
-                retVal += "T";
+                retVal += "t";
             }
             if(biString.substring(i, i + 2).equals("01")){
-                retVal += "C";
+                retVal += "c";
             }
             if(biString.substring(i, i + 2).equals("10")){
-                retVal += "G";
+                retVal += "g";
             }
 
         }
