@@ -69,28 +69,20 @@ public class BTree
 
     if(node.isLeaf){
       for(int i = 1; i <= node.size; i++){
-        BTreeNode leafNode = new BTreeNode(node.child[i]);
-        dumpNode(leafNode, ps);
         ps.append(node.keys[i].toString());
         ps.append("\n");
       }
 
       return; 
     }
-
     for(int i = 1; i <= node.size; i++){
       BTreeNode child = new BTreeNode(node.child[i]);
       dumpNode(child, ps);
       ps.append(node.keys[i].toString());
       ps.append("\n");
     }
-
-    for(int i = 1; i <= node.size; i++){
       BTreeNode rChild = new BTreeNode(node.child[node.size + 1]);
       dumpNode(rChild, ps);
-      ps.append(node.keys[i].toString());
-      ps.append("\n");
-    }
 
   }
 
@@ -354,6 +346,23 @@ public class BTree
           System.out.println("ERROR!");
         }
 
+      }
+
+      public int search(long key) throws IOException{
+        int i = 1;
+        while(i <= this.size && key > keys[i].getDNA()){
+          i++;
+        }
+        if(i <= this.size && key == this.keys[i].getDNA()){
+          return keys[i].getFrequency();
+        }
+        else if(this.isLeaf){
+          return -1;
+        }
+        else{
+          BTreeNode node = new BTreeNode(this.child[i]);
+          return node.search(key);
+        }
       }
 
       /**
