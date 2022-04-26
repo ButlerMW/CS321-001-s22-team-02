@@ -42,7 +42,7 @@ public class BTreeTest
     @Test
     public void emptyBTree_Add2_Add4_Add7_247() throws IOException
     {
-        BTree test = new BTree(2, "TEST");
+        BTree test = new BTree(2, "TEST", 100);
         test.BTreeInsert(2);
         test.BTreeInsert(4);
         test.BTreeInsert(7);
@@ -57,7 +57,7 @@ public class BTreeTest
     @Test
     public void emptyBTree_Add2_Add4_Add7_Add8_2478() throws IOException
     {
-        BTree test = new BTree(2, "TEST");
+        BTree test = new BTree(2, "TEST", 100);
         test.BTreeInsert(2);
         test.BTreeInsert(4);
         test.BTreeInsert(7);
@@ -75,7 +75,7 @@ public class BTreeTest
     @Test
     public void emptyBTree_Add2_Add4_Add7_Add8_Add5_Add6_472568() throws IOException
     {
-        BTree test = new BTree(2, "TEST");
+        BTree test = new BTree(2, "TEST",100);
         test.BTreeInsert(2);
         test.BTreeInsert(4);
         test.BTreeInsert(7);
@@ -96,7 +96,7 @@ public class BTreeTest
     @Test
     public void emptyBTree_Add2_Add4_Add7_Add8_Add5_Add6_Add9_Add10_Add11_47925681011() throws IOException
     {
-        BTree test = new BTree(2, "TEST");
+        BTree test = new BTree(2, "TEST", 100);
         int[] intArray = new int[]{ 2,4,7,8,5,6,9,10,11 };
         for(int i = 0; i < intArray.length; i++)
         {
@@ -127,7 +127,7 @@ public class BTreeTest
     @Test
     public void emptyBTree_Add2_Add4_Add7_Add8_Add5_Add6_Add9_Add10_Add11_Add12_47925681011() throws IOException
     {
-        BTree test = new BTree(2, "TEST");
+        BTree test = new BTree(2, "TEST", 100);
         int[] intArray = new int[]{ 2,4,7,8,5,6,9,10,11,12 };
         for(int i = 0; i < intArray.length; i++)
         {
@@ -147,7 +147,7 @@ public class BTreeTest
     @Test
     public void emptyBTree_Add2_Add4_Add7_Add8_Add5_Add6_Add9_Add10_Add11_Add12_Add3_Add13_Add14_Add15_Add16_711491314235810121516() throws IOException
     {
-        BTree test = new BTree(2, "TEST");
+        BTree test = new BTree(2, "TEST", 100);
         int[] intArray = new int[]{ 2,4,7,8,5,6,9,10,11,12,3,13,14,15,16 };
         for(int i = 0; i < intArray.length; i++)
         {
