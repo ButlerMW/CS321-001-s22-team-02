@@ -337,6 +337,26 @@ public class BTree
           System.out.println("ERROR!");
         }
       }
+
+      public int search(long key) throws IOException{
+        int i = 1;
+        while(i <= this.size && key > keys[i].getDNA()){
+          i++;
+        }
+        if(i <= this.size && key == this.keys[i].getDNA()){
+          return keys[i].getFrequency();
+        }
+        else if(this.isLeaf){
+          return -1;
+        }
+        else{
+          BTreeNode node = new BTreeNode(this.c[i]);
+          return node.search(key);
+        }
+      }
+
+
+
       /**
        * ToString 
        */
