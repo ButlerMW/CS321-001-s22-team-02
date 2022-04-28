@@ -1,4 +1,4 @@
-package cs321.create;
+package test.java.cs321.create;
 
 import cs321.common.ParseArgumentException;
 import main.java.cs321.create.GeneBankCreateBTree;

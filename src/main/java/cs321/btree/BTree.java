@@ -1,13 +1,12 @@
-package cs321.btree;
+package main.java.cs321.btree;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.LinkedList;
 import java.util.Queue;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /**
  * BTree Class
@@ -91,7 +90,7 @@ public class BTree
   {
       int size = 0; // number of keys
       boolean isLeaf;
-      TreeObject[] keys = new TreeObject[2*degree];
+      cs321.btree.TreeObject[] keys = new cs321.btree.TreeObject[2*degree];
       long address;
       long c[] = new long[2*degree + 1];
       /**
@@ -102,7 +101,7 @@ public class BTree
         this.isLeaf = isLeaf;
         this.address = address;
         size = 0;
-        keys = new TreeObject[2*degree + 2];
+        keys = new cs321.btree.TreeObject[2*degree + 2];
         // numKeys = 0;
         c = new long[2*degree +1]; // key array size == 2t + 1
       }
@@ -151,7 +150,7 @@ public class BTree
             long l = bb.getLong();
 //          int x = raf.readInt();
             int x = bb.getInt();
-          keys[i] = new TreeObject(l, x);
+          keys[i] = new cs321.btree.TreeObject(l, x);
         }
         if(!isLeaf)
         {
@@ -221,7 +220,7 @@ public class BTree
                 this.keys[i+1] = this.keys[i];
                 i = i - 1;
             }
-            this.keys[i+1] = new TreeObject(key);
+            this.keys[i+1] = new cs321.btree.TreeObject(key);
 //          this.keys[i] = new TreeObject(key);
             this.size++;
             this.DiskWrite();

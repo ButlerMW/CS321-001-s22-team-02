@@ -1,8 +1,9 @@
-package cs321.create;
+package main.java.cs321.create;
 
 import cs321.common.ParseArgumentException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,8 +14,7 @@ public class GeneBankCreateBTree
 
     public static void main(String[] args) throws Exception
     {
-        System.out.println(Parse("TEST"));
-        System.out.println("Hello world from cs321.create.GeneBankCreateBTree.main");
+        System.out.println(Parse("file.txt"));
         cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
 
 
@@ -82,19 +82,35 @@ public class GeneBankCreateBTree
         return null;
     }
 
-    public static List <String> Parse (String name){
+    public static List <String> Parse (String name) throws FileNotFoundException {
         File file = new File (name);
-        Scanner scan = new Scanner (name);
+        Scanner scan = new Scanner (file);
         List segments = new LinkedList();
+        String returnString = "";
         while (scan.hasNextLine()){
             String line = scan.nextLine();
             if (line.contains("ORIGIN")){
-                scan.useDelimiter("[^ACTG/]+");
+                scan.useDelimiter("[^ACTG /]+");
                 while (scan.hasNext()) {
                     String str = scan.next();
-                    if (!str.equals("/")) {
-                        segments.add(str);
+                    if (!str.equals("//") && !str.equals(" ")) {
+
+                        returnString = "";
+                        if(str.contains(" ")){
+                            for(int i = 0; i < str.length(); i++){
+                                if (!(str.charAt(i) == ' ')){
+                                    returnString += str.charAt(i);
+                                }
+                            }
+                        }
+                        else{
+                            returnString = str;
+                        }
+
+                        segments.add(returnString);
                     }
+
+
                     else {
                         break;
                     }
@@ -108,13 +124,13 @@ public class GeneBankCreateBTree
     public static List <String> getPatterns(int len, String sequence){
         List patterns = new LinkedList();
         int subStart = 0;
-        int subEnd = len - 1;
+        int subEnd = len;
 
         if (len > sequence.length()){
             return null;
         }
 
-        if (len < 31 || len > 1){
+        if (len > 31 || len < 1){
             return null;
         }
 

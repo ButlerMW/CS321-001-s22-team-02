@@ -1,8 +1,6 @@
-package cs321.btree;
+package main.java.cs321.btree;
 
 import java.util.LinkedList;
-
-import cs321.btree.BTree.BTreeNode;
 
 public class Cache<T, E> // T = search key E = what to store
 {

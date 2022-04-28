@@ -1,0 +1,19 @@
+This is a file
+
+This is a test
+
+ORIGIN
+ACG CTNNNNN
+NNACT USELESS
+//
+
+meaningless
+meaningless
+
+ORIGIN
+NNNTACN   GGG
+NN USELESS
+TAC
+//
+
+Parse() should return ACGCT, ACT, TAC, GGG
