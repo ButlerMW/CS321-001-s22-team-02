@@ -1,12 +1,10 @@
 //package main.java.cs321.search;
 package cs321.search;
 
+import cs321.btree.BTree;
 import cs321.btree.TreeObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.util.Scanner;
 
 public class GeneBankSearchBTree
@@ -14,19 +12,24 @@ public class GeneBankSearchBTree
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
         boolean useCache; // 0 no/false 1 with cache/true
+        String btreeFile = args[1];
 
 //        System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
 
         Scanner file = new Scanner(new File("query6.txt"));
-//        BTree;
+
+        BTree searchTree = new BTree(btreeFile);
+        PrintStream logOut = System.out;
+        PrintStream ps = new PrintStream("test"); //
         while(file.hasNextLine())
         {
            String sequence = file.nextLine();
             long geneNum = dnaToLong(sequence);
-            TreeObject searchNode = new TreeObject(geneNum);
-
-
+            searchTree.search(geneNum, ps);
+//            TreeObject searchNode = new TreeObject(geneNum);
         }
+        System.setOut(ps);
+        System.setOut(logOut);
     }
 
     /**

@@ -8,17 +8,17 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.regex.Pattern;
 
 public class GeneBankCreateBTree
 {
 
     public static void main(String[] args) throws Exception
     {
-        System.out.println(Parse("file.txt"));
+//        System.out.println(Parse("file.txt")); // file.txt
+        System.out.println(Parse("data/files_gbk/test3.gbk"));
+
         cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
-
-
     }
 
     /* Convert DNA to long */
@@ -30,22 +30,22 @@ public class GeneBankCreateBTree
         for(int i = 0; i < DNA.length(); i++)
         {
             char c = DNA.charAt(i);
-            if(c == 'a')
+            if(c == 'a' || c == 'A')
             {
                 retVal += 0;
                 retVal = retVal<<2;
             }
-            else if(c == 't')
+            else if(c == 't' || c == 'T')
             {
                 retVal += 3;
                 retVal = retVal<<2;
             }
-            else if(c == 'c')
+            else if(c == 'c' || c == 'C')
             {
                 retVal += 1;
                 retVal = retVal<<2;
             }
-            else if(c == 'g')
+            else if(c == 'g' || c == 'G')
             {
                 retVal += 2;
                 retVal = retVal<<2;
@@ -74,7 +74,6 @@ public class GeneBankCreateBTree
 
     private static void printUsageAndExit(String errorMessage)
     {
-
         System.exit(1);
     }
 
@@ -91,7 +90,8 @@ public class GeneBankCreateBTree
         while (scan.hasNextLine()){
             String line = scan.nextLine();
             if (line.contains("ORIGIN")){
-                scan.useDelimiter("[^ACTG /]+");
+//                scan.useDelimiter("[^1234567890actg /\n]+");
+                scan.useDelimiter(Pattern.compile("[^1234567890actg /\\n]+"));
                 while (scan.hasNext()) {
                     String str = scan.next();
                     if (!str.equals("//") && !str.equals(" ")) {
@@ -99,7 +99,7 @@ public class GeneBankCreateBTree
                         returnString = "";
                         if(str.contains(" ")){
                             for(int i = 0; i < str.length(); i++){
-                                if (!(str.charAt(i) == ' ')){
+                                if (!"1234567890 /\n".contains(String.valueOf(str.charAt(i)))){
                                     returnString += str.charAt(i);
                                 }
                             }
@@ -111,12 +111,11 @@ public class GeneBankCreateBTree
                         segments.add(returnString);
                     }
 
-
                     else {
                         break;
                     }
                 }
-                scan.useDelimiter("\n");
+                scan.useDelimiter(Pattern.compile("[\\n]"));
             }
         }
         return segments;
@@ -143,9 +142,4 @@ public class GeneBankCreateBTree
 
         return patterns;
     }
-
-
-
-
-
 }

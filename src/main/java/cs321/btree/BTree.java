@@ -55,7 +55,17 @@ public class BTree
     }
   }
 
-  public void dump(String filename) throws IOException{
+    /**
+     *
+     *
+     * @throws IOException
+     */
+    public BTree(String file) throws FileNotFoundException
+    {
+
+    }
+
+    public void dump(String filename) throws IOException{
     PrintStream ps = new PrintStream(filename);
     PrintStream stdout = System.out;
 
@@ -87,11 +97,16 @@ public class BTree
 
   }
 
+    public int search(long key, PrintStream ps) throws IOException
+    {
+        return root.search(key, ps);
+    }
 
 
-  /**
-   * BTreeNode class
-   */
+
+        /**
+         * BTreeNode class
+         */
   public class BTreeNode
   {
       int size = 0; // number of keys
@@ -343,12 +358,14 @@ public class BTree
         }
       }
 
-      public int search(long key) throws IOException{
+      public int search(long key, PrintStream ps) throws IOException{
         int i = 1;
         while(i <= this.size && key > keys[i].getDNA()){
           i++;
         }
         if(i <= this.size && key == this.keys[i].getDNA()){
+            ps.append(keys[i].toString());
+            ps.append("\n");
           return keys[i].getFrequency();
         }
         else if(this.isLeaf){
@@ -356,7 +373,7 @@ public class BTree
         }
         else{
           BTreeNode node = new BTreeNode(this.c[i]);
-          return node.search(key);
+          return node.search(key, ps);
         }
       }
 
