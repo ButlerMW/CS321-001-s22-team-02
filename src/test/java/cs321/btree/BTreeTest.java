@@ -1,6 +1,7 @@
-package test.java.cs321.btree;
+//package test.java.cs321.btree;
+package cs321.btree;
 
-import main.java.cs321.btree.BTree;
+//import main.java.cs321.btree.BTree;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

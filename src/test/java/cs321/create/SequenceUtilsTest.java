@@ -1,6 +1,7 @@
-package test.java.cs321.create;
+//package test.java.cs321.create;
+package cs321.create;
 
-import main.java.cs321.create.GeneBankCreateBTree;
+//import main.java.cs321.create.GeneBankCreateBTree;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
@@ -28,9 +29,11 @@ public class SequenceUtilsTest
 
         List<String> Tst = null;
         try {
-                Tst = GeneBankCreateBTree.Parse("file.txt");
+//                Tst = GeneBankCreateBTree.Parse("file.txt");
 
-        List <String> Exp = new LinkedList<>();
+                Tst = GeneBankCreateBTree.Parse("query31.txt");
+
+                List <String> Exp = new LinkedList<>();
 
         Exp.add("ACGCT");
         Exp.add("ACT");

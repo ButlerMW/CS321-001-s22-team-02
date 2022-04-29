@@ -1,4 +1,5 @@
-package main.java.cs321.search;
+//package main.java.cs321.search;
+package cs321.search;
 
 public class GeneBankSearchDatabase
 {

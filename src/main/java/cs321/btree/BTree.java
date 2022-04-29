@@ -1,4 +1,5 @@
-package main.java.cs321.btree;
+//package main.java.cs321.btree;
+package cs321.btree;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class BTree
   private int numOfNodes;
   private RandomAccessFile raf;
 //  private FileChannel fc;
+    private long sequenceLength; // sequence length
   private Cache<Long, BTreeNode> BTreeCache;
 
     /**
@@ -31,16 +33,20 @@ public class BTree
   public BTree(int degree, String file, int cacheSize) throws FileNotFoundException
   {
     this.degree = degree;
-    root = new BTreeNode(true, 0);
-    //nextAddress = 0;
+    root = new BTreeNode(true, 12);
+    nextAddress = 0;
     int sizeOfBTreeNode = 1000; // calulate later
     numOfNodes = 1;
     this.BTreeCache = new Cache<>(cacheSize);
 
     try
     {
-      raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-//        fc = raf.getChannel();
+        raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
+        raf.seek(0);
+        raf.writeInt(degree);
+        raf.writeLong(0);
+        raf.writeInt(sizeOfBTreeNode);
+        raf.writeLong(nextAddress);
     }
     catch (Exception e)
     {
