@@ -11,10 +11,24 @@ public class GeneBankSearchBTree
 {
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
+
         boolean useCache; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
 
-//        System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
+//      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
+
+        if(args.length < 3 || args.length > 5){
+            printUsage();
+        }
+
+        if(args[0].equals("1")){
+            useCache = true;
+        }
+        else if(!args[0].equals("0")){
+            printUsage();
+        }
+
+        
 
         Scanner file = new Scanner(new File("query6.txt"));
 
