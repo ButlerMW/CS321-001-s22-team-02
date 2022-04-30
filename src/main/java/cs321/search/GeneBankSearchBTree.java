@@ -38,9 +38,9 @@ public class GeneBankSearchBTree
         while(file.hasNextLine())
         {
            String sequence = file.nextLine();
-            long geneNum = dnaToLong(sequence);
+           long geneNum = dnaToLong(sequence);
             searchTree.search(geneNum, ps);
-//            TreeObject searchNode = new TreeObject(geneNum);
+
         }
         System.setOut(ps);
         System.setOut(logOut);
