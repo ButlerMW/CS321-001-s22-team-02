@@ -29,7 +29,7 @@ public class GeneBankSearchBTree
         }
 
         
-
+       
         Scanner file = new Scanner(new File("query6.txt"));
 
         BTree searchTree = new BTree(btreeFile);
