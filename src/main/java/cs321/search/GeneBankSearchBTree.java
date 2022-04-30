@@ -14,6 +14,9 @@ public class GeneBankSearchBTree
 
         boolean useCache; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
+        String queryFile = args[2];
+
+
 
 //      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
 
@@ -28,6 +31,10 @@ public class GeneBankSearchBTree
             printUsage();
         }
 
+        if(args[4].equals("0")){
+            return;
+        }
+
         
        
         Scanner file = new Scanner(new File("query6.txt"));
@@ -39,7 +46,10 @@ public class GeneBankSearchBTree
         {
            String sequence = file.nextLine();
            long geneNum = dnaToLong(sequence);
-            searchTree.search(geneNum, ps);
+           //searchTree.search(geneNum, ps);
+            int freq = searchTree.search(geneNum, ps);
+           //dump(searchTree);
+           System.out.println(sequence + ": " + freq);
 
         }
         System.setOut(ps);
