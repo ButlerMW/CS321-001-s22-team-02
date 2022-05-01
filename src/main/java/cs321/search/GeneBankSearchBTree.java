@@ -16,8 +16,6 @@ public class GeneBankSearchBTree
         String btreeFile = args[1];
         String queryFile = args[2];
 
-
-
 //      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
 
         if(args.length < 3 || args.length > 5){
@@ -68,7 +66,9 @@ public class GeneBankSearchBTree
         long nextAddress = raf.readLong();
     }
 
-    /* Convert DNA to long */
+    /**
+     * Convert DNA to long
+     */
     public static long dnaToLong(String DNA)
     {
         long retVal = 0;
@@ -107,6 +107,7 @@ public class GeneBankSearchBTree
     public static void printUsage()
     {
         System.out.println("java GeneBankSearch <0/1(no/with Cache)> <btree file> <query file> [<cache size>] [<debug level>]");
+        System.exit(1); // exit out of program as not expected
     }
 }
 

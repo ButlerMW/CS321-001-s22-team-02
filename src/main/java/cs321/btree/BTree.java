@@ -42,11 +42,11 @@ public class BTree
     try
     {
         raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-        raf.seek(0);
-        raf.writeInt(degree);
-        raf.writeLong(0);
-        raf.writeInt(sizeOfBTreeNode);
-        raf.writeLong(nextAddress);
+//        raf.seek(0);
+//        raf.writeInt(degree);
+//        raf.writeLong(0);
+//        raf.writeInt(sizeOfBTreeNode);
+//        raf.writeLong(nextAddress);
     }
     catch (Exception e)
     {
@@ -56,16 +56,27 @@ public class BTree
   }
 
     /**
-     *
-     *
+     * BTree constructor
+     * Gene Bank
      * @throws IOException
      */
-    public BTree(String file) throws FileNotFoundException
+    public BTree(String file) throws IOException, FileNotFoundException
     {
-
+        raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
+        raf.seek(0);
+        raf.writeInt(degree);
+        raf.writeLong(0);
+        raf.writeInt(sizeOfBTreeNode);
+        raf.writeLong(nextAddress);
     }
 
-    public void dump(String filename) throws IOException{
+    /**
+     * dump
+     * @param filename
+     * @throws IOException
+     */
+    public void dump(String filename) throws IOException
+    {
     PrintStream ps = new PrintStream(filename);
     PrintStream stdout = System.out;
 
@@ -73,11 +84,16 @@ public class BTree
 
     System.setOut(ps);
     System.setOut(stdout);
-    
   }
 
-  public void dumpNode(BTreeNode node,PrintStream ps ) throws IOException{
-
+    /**
+     *
+     * @param node
+     * @param ps
+     * @throws IOException
+     */
+  public void dumpNode(BTreeNode node,PrintStream ps ) throws IOException
+  {
     if(node.isLeaf){
       for(int i = 1; i <= node.size; i++){
         ps.append(node.keys[i].toString());
@@ -86,7 +102,8 @@ public class BTree
 
       return; 
     }
-    for(int i = 1; i <= node.size; i++){
+    for(int i = 1; i <= node.size; i++)
+    {
       BTreeNode child = new BTreeNode(node.c[i]);
       dumpNode(child, ps);
       ps.append(node.keys[i].toString());
@@ -94,19 +111,19 @@ public class BTree
     }
       BTreeNode rChild = new BTreeNode(node.c[node.size + 1]);
       dumpNode(rChild, ps);
-
   }
 
+    /**
+     * search
+     */
     public int search(long key, PrintStream ps) throws IOException
     {
         return root.search(key, ps);
     }
 
-
-
-        /**
-         * BTreeNode class
-         */
+  /**
+   * BTreeNode class
+   */
   public class BTreeNode
   {
       int size = 0; // number of keys
@@ -114,6 +131,7 @@ public class BTree
       cs321.btree.TreeObject[] keys = new cs321.btree.TreeObject[2*degree];
       long address;
       long c[] = new long[2*degree + 1];
+
       /**
        * Default BtreeNode contructor
        */
@@ -127,7 +145,7 @@ public class BTree
         c = new long[2*degree +1]; // key array size == 2t + 1
       }
 
-   /**
+      /**
        * BTreeNode Constructor
        * Disk Read Call
        * @param address
@@ -183,6 +201,7 @@ public class BTree
           }
         }
       }
+
       /**
        * BTreeNode Contstructor
        * 
@@ -309,10 +328,11 @@ public class BTree
           z.DiskWrite();
           this.DiskWrite();
       }
+
       /**
-       * Writed BTree Node to file
+       * Write BTree Node to file
        */
-      public void DiskWrite() //BTreeNode, int offset...
+      public void DiskWrite()
       {
         // int i = 0;
         ByteBuffer bb = ByteBuffer.allocate(sizeOfBTreeNode);
@@ -358,26 +378,29 @@ public class BTree
         }
       }
 
-      public int search(long key, PrintStream ps) throws IOException{
+      public int search(long key, PrintStream ps) throws IOException
+      {
         int i = 1;
-        while(i <= this.size && key > keys[i].getDNA()){
+        while(i <= this.size && key > keys[i].getDNA())
+        {
           i++;
         }
-        if(i <= this.size && key == this.keys[i].getDNA()){
+        if(i <= this.size && key == this.keys[i].getDNA())
+        {
             ps.append(keys[i].toString());
             ps.append("\n");
-          return keys[i].getFrequency();
+            return keys[i].getFrequency();
         }
-        else if(this.isLeaf){
-          return -1;
+        else if(this.isLeaf)
+        {
+            return -1;
         }
-        else{
+        else
+        {
           BTreeNode node = new BTreeNode(this.c[i]);
           return node.search(key, ps);
         }
       }
-
-
 
       /**
        * ToString 
@@ -420,6 +443,7 @@ public class BTree
       r.BTreeInsertNonFull(key);
     }
   }
+
   /**
    * Search for node at the index
    * @param index

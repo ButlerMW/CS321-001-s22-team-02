@@ -26,7 +26,7 @@ public class Cache<T, E> // T = search key E = what to store
   }
 
   /**
-   * Add to Cheche Linked List
+   * Add to Cache Linked List
    * @param searchKey
    * @param storedKey
    */

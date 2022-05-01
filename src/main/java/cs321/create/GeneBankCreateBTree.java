@@ -10,19 +10,24 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Use a string that takes in everything from ORIGIN to // and add ATCG and N to a string.
+ */
 public class GeneBankCreateBTree
 {
-
     public static void main(String[] args) throws Exception
     {
 //        System.out.println(Parse("file.txt")); // file.txt
         System.out.println(Parse("data/files_gbk/test3.gbk"));
-
         cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args);
     }
 
-    /* Convert DNA to long */
-
+    /**
+     * dnaToLong method
+     * Convert DNA to long
+     * @param DNA
+     * @return
+     */
     public static long dnaToLong(String DNA)
     {
         long retVal = 0;
@@ -82,59 +87,96 @@ public class GeneBankCreateBTree
         return null;
     }
 
-    public static List <String> Parse (String name) throws FileNotFoundException {
+    /**
+     * Parse Method
+     * @param name
+     * @return
+     * @throws FileNotFoundException
+     */
+    public static List <String> Parse (String name) throws FileNotFoundException
+    {
         File file = new File (name);
         Scanner scan = new Scanner (file);
         List segments = new LinkedList();
         String returnString = "";
-        while (scan.hasNextLine()){
+        while (scan.hasNextLine())
+        {
             String line = scan.nextLine();
-            if (line.contains("ORIGIN")){
-//                scan.useDelimiter("[^1234567890actg /\n]+");
-                scan.useDelimiter(Pattern.compile("[^1234567890actg /\\n]+"));
-                while (scan.hasNext()) {
-                    String str = scan.next();
-                    if (!str.equals("//") && !str.equals(" ")) {
+            if (line.contains("ORIGIN"))
+            {
+//                scan.useDelimiter("[^1234567890acntgACNTG /]+");
 
-                        returnString = "";
-                        if(str.contains(" ")){
-                            for(int i = 0; i < str.length(); i++){
-                                if (!"1234567890 /\n".contains(String.valueOf(str.charAt(i)))){
+                while (scan.hasNextLine())
+                {
+
+                    String str = scan.nextLine();
+                    if (!str.contains("//") && !str.equals(" "))
+                    {
+//                        returnString = "";
+                        if(str.contains(" "))
+                        {
+                            for(int i = 0; i < str.length(); i++)
+                            {
+                                if (!"1234567890 /\n".contains(String.valueOf(str.charAt(i))))
+                                {
                                     returnString += str.charAt(i);
                                 }
                             }
+                            System.out.println(str);
                         }
-                        else{
+                        else
+                        {
                             returnString = str;
                         }
-
-                        segments.add(returnString);
+//                        segments.add(returnString); // removing linked list
                     }
-
-                    else {
+                    else
+                    {
+                        System.out.println(str);
+                        Scanner strScan = new Scanner(returnString);
+                        strScan.useDelimiter("nn*");
+                        while(strScan.hasNext())
+                        {
+                            String testPrint = strScan.next();
+                            segments.add(testPrint);
+                        }
+                        returnString = "";
                         break;
                     }
                 }
-                scan.useDelimiter(Pattern.compile("[\\n]"));
+//                scan.useDelimiter(Pattern.compile("\\n"));
             }
         }
+//        segments.add(returnString);
         return segments;
     }
 
-    public static List <String> getPatterns(int len, String sequence){
+    //
+
+    /**
+     * getPatterns
+     * @param len
+     * @param sequence
+     * @return
+     */
+    public static List <String> getPatterns(int len, String sequence)
+    {
         List patterns = new LinkedList();
         int subStart = 0;
         int subEnd = len;
 
-        if (len > sequence.length()){
+        if (len > sequence.length())
+        {
             return null;
         }
 
-        if (len > 31 || len < 1){
+        if (len > 31 || len < 1)
+        {
             return null;
         }
 
-        for (int i = len-1; i < sequence.length(); i++){
+        for (int i = len-1; i < sequence.length(); i++)
+        {
             patterns.add(sequence.substring(subStart, subEnd));
             subStart++;
             subEnd++;
