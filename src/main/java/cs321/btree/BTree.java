@@ -60,7 +60,7 @@ public class BTree
      * Gene Bank
      * @throws IOException
      */
-    public BTree(String file) throws IOException, FileNotFoundException
+    public BTree(String file) throws IOException
     {
         raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
         raf.seek(0);
@@ -69,6 +69,7 @@ public class BTree
         raf.writeInt(sizeOfBTreeNode);
         raf.writeLong(nextAddress);
     }
+
 
     /**
      * dump

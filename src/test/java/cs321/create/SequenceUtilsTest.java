@@ -27,28 +27,28 @@ public class SequenceUtilsTest
 //        }
 
 
-        List<String> Tst = null;
-        try {
-//                Tst = GeneBankCreateBTree.Parse("file.txt");
-
-                Tst = GeneBankCreateBTree.Parse("query31.txt");
-
-                List <String> Exp = new LinkedList<>();
-
-        Exp.add("ACGCT");
-        Exp.add("ACT");
-        Exp.add("TAC");
-        Exp.add("GGG");
-
-
-
-                for (int i = 0; i < Exp.size(); i++){
-            System.out.println(Tst.get(i) + " " + Exp.get(i) + " " + (Tst.get(i).equals(Exp.get(i))));
-
-        }
-        } catch (FileNotFoundException e) {
-                e.printStackTrace();
-        }
+//        List<String> Tst = null;
+//        try {
+////                Tst = GeneBankCreateBTree.Parse("file.txt");
+//
+////                Tst = GeneBankCreateBTree.Parse("query31.txt");
+//
+//                List <String> Exp = new LinkedList<>();
+//
+//        Exp.add("ACGCT");
+//        Exp.add("ACT");
+//        Exp.add("TAC");
+//        Exp.add("GGG");
+//
+//
+//
+//                for (int i = 0; i < Exp.size(); i++){
+//            System.out.println(Tst.get(i) + " " + Exp.get(i) + " " + (Tst.get(i).equals(Exp.get(i))));
+//
+//        }
+//        } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//        }
 
     }
 }
