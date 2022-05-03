@@ -39,14 +39,15 @@ public class GeneBankSearchBTree
         BTree searchTree = new BTree(btreeFile);
         PrintStream logOut = System.out;
         PrintStream ps = new PrintStream("test"); //
+
         while(file.hasNextLine())
         {
-        String sequence = file.nextLine();
-        long geneNum = dnaToLong(sequence);
-        //searchTree.search(geneNum, ps);
+            String sequence = file.nextLine();
+            long geneNum = dnaToLong(sequence);
+            //searchTree.search(geneNum, ps);
             int freq = searchTree.search(geneNum, ps);
-        //dump(searchTree);
-        System.out.println(sequence + ": " + freq);
+            //dump(searchTree);
+            System.out.println(sequence + ": " + freq);
 
         }
         System.setOut(ps);
