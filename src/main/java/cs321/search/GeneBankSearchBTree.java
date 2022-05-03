@@ -1,5 +1,6 @@
 //package main.java.cs321.search;
 package cs321.search;
+import cs321.btree.BTree;
 
 import cs321.btree.BTree;
 import cs321.btree.TreeObject;
@@ -18,7 +19,7 @@ public class GeneBankSearchBTree
 
 //      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
 
-        if(args.length < 3 || args.length > 5){
+        if(args.length < 4 || args.length > 5){
             printUsage();
         }
 
@@ -32,8 +33,6 @@ public class GeneBankSearchBTree
         if(args[4].equals("0")){
             return;
         }
-
-        
        
         Scanner file = new Scanner(new File("query6.txt"));
 
@@ -42,16 +41,18 @@ public class GeneBankSearchBTree
         PrintStream ps = new PrintStream("test"); //
         while(file.hasNextLine())
         {
-           String sequence = file.nextLine();
-           long geneNum = dnaToLong(sequence);
-           //searchTree.search(geneNum, ps);
+        String sequence = file.nextLine();
+        long geneNum = dnaToLong(sequence);
+        //searchTree.search(geneNum, ps);
             int freq = searchTree.search(geneNum, ps);
-           //dump(searchTree);
-           System.out.println(sequence + ": " + freq);
+        //dump(searchTree);
+        System.out.println(sequence + ": " + freq);
 
         }
         System.setOut(ps);
         System.setOut(logOut);
+        
+
     }
 
     /**
