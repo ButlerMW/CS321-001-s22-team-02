@@ -15,10 +15,11 @@ public class GeneBankSearchBTree
 
         boolean useCache = false; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
+        int cacheSize = 0;
 
 //      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
 
-        if(args.length < 4 || args.length > 5){
+        if(args.length < 3 || args.length > 5){
             printUsage();
         }
 
@@ -26,31 +27,26 @@ public class GeneBankSearchBTree
             useCache = true;
         }
         else if(!args[0].equals("0")){
+            useCache = false;
+        }
+        else{
             printUsage();
         }
 
-        if(args[1].equals("")){
-            // optimum degree based on disk block size of 4096
-            return;
+
+        if(useCache && args.length >= 4){
+            cacheSize = Integer.parseInt(args[3]);
+            if(cacheSize <= 0){
+                printUsage();
+                System.exit(1);
+            }
         }
 
-        if(args[2].equals("")){
-            return;
-        }
-
-        if(args[3].equals("")){
-            return;
-        }
-
-        if(args[4].equals("0")){
-            return;
-        }
-
-        if(args[5].equals("")){
-            return;
+        if(!useCache && args.length == 4 && args[4].equals("0") ){
+            printUsage();
         }
        
-        Scanner file = new Scanner(new File("query6.txt"));
+        Scanner file = new Scanner(new File(args[3]));
 
         BTree searchTree = new BTree(btreeFile);
         PrintStream logOut = System.out;
@@ -63,7 +59,10 @@ public class GeneBankSearchBTree
             //searchTree.search(geneNum, ps);
             int freq = searchTree.search(geneNum, ps);
             //dump(searchTree);
-            System.out.println(sequence + ": " + freq);
+            if(freq != -1){
+                System.out.println(sequence + ": " + freq);
+            }
+            
 
         }
         System.setOut(ps);
@@ -75,7 +74,7 @@ public class GeneBankSearchBTree
     /**
      * BTree constructor
      */
-    public static void BTree(RandomAccessFile raf) throws IOException
+    public static void BTr(RandomAccessFile raf) throws IOException
     {
         raf.seek(0);
         int degree = raf.readInt();

@@ -33,10 +33,16 @@ public class BTree
    */
   public BTree(int degree, String file, int cacheSize, int sequenceLength) throws FileNotFoundException
   {
-    this.degree = degree;
-    root = new BTreeNode(true, 0);
+    if(degree == 0){
+      
+    }
+    else{
+      this.degree = degree;
+    }
+    root = new BTreeNode(true, 24);
+    nextAddress = 24 + sizeOfBTreeNode;
 //    nextAddress = 0;
-    int sizeOfBTreeNode = 1000; // calulate later
+    int sizeOfBTreeNode = 4 + 8 + 2 + (2*degree -1)*12 + 16*degree; // calulate later
     numOfNodes = 1;
     this.BTreeCache = new Cache<>(cacheSize);
     this.sequenceLength = sequenceLength;
@@ -44,11 +50,11 @@ public class BTree
     try
     {
         raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-//        raf.seek(0);
-//        raf.writeInt(degree);
-//        raf.writeLong(0);
-//        raf.writeInt(sizeOfBTreeNode);
-//        raf.writeLong(nextAddress);
+       raf.seek(0);
+       raf.writeInt(degree);
+       raf.writeLong(24);
+       raf.writeInt(sizeOfBTreeNode);
+       raf.writeLong(nextAddress);
     }
     catch (Exception e)
     {
