@@ -26,95 +26,71 @@ public class GeneBankCreateBTree
     // public boolean useCache;
     public boolean debugCall;
 
-    // /**
-    //  * Constructor for GeneBackCreateBTree no cache/ no debug
-    //  * @throws IOException
-    //  */
-    // public GeneBankCreateBTree(String cache, String degree, String gbkFile, String sequenceLength) throws IOException
-    // {
-    //   /* check cache */
-    //   if(!cache.equals("0"))
-    //   {
-    //     printUsageAndExit();
-    //   }
-
-    //   this.degree = Integer.parseInt(degree);
-    //   this.sequenceLength = Integer.parseInt(sequenceLength);
-
-    //   /* check sequenceLength in range 1 <= x <= 31 */
-    //   if(this.sequenceLength < 1 || this.sequenceLength > 31)
-    //   {
-    //     printUsageAndExit();
-    //   }
-
-    //   this.fileString = gbkFile;
-    //   // this.filename = new File(gbkFile);
-    //   workingBTree = new BTree(this.fileString);
-    // }
-
     public static void main(String[] args) throws Exception
     {
-      String cacheCall = args[0];
+      String cacheCall = "0"; // args[0]
       boolean useCache = false;
-      int degreeCall = Integer.parseInt(args[1]);
-      String gbkFile = args[2];
-      int sequenceLength = Integer.parseInt(args[3]);
-
+      int cacheSize = 0;
+      int degreeCall = 3; // Integer.parseInt(args[1]);
+      String gbkFile = "data/files_gbk/test0.gbk"; // args[2];
+      int sequenceLength = 4; // Integer.parseInt(args[3]);
 
       BTree workingBTree = null;
+      workingBTree = new BTree(degreeCall, "testRAF", 0, sequenceLength); // degree, gbk file,
 
-        // GeneBankCreateBTree geneBank = null;
-        /* check args */
-        /* no cache or debug */
-        if(args.length == 4)
-        {
-          if(!cacheCall.equals("0")) {
-            printUsageAndExit();
-          }
-          workingBTree = new BTree(args[2]); // degree, useCache, 
-          // geneBank = new GeneBankCreateBTree(args[0], args[1], args[2], args[3]); // cache/no cache, degree, gbk file, sequence length // different way
-        }
-        /* cache or debug */
-        else if(args.length == 5)
-        {
-          if(cacheCall.equals("0"))
-          {
-            if(args[4].equals("0"))
-            {
-              // debug level 0
-            }
-            else if(args[4].equals("1"))
-            {
-              // debug level 1
-            }
-            else 
-            {
-              printUsageAndExit();
-            }
-          }
-        }
-        /* cache and debug */
-        else if(args.length == 6)
-        {
-          if(cacheCall.equals("1"))
-          {
-            useCache = true;
-          }
-          else 
-          {
-            printUsageAndExit();  
-          }
-        }
-        /* args < 4 or < 6 */
-        else
-        {
-          printUsageAndExit();
-        }
+//        /* check args */
+//        /* no cache and no debug */
+//        if(args.length == 4)
+//        {
+//          if(!cacheCall.equals("0"))
+//          {
+//            printUsageAndExit();
+//          }
+//          workingBTree = new BTree(degreeCall, gbkFile, 0); // degree, gbk file,
+//        }
+//        /* cache or debug */
+//        else if(args.length == 5)
+//        {
+//          if(cacheCall.equals("0"))
+//          {
+//            if(args[4].equals("0"))
+//            {
+//              // debug level 0
+//            }
+//            else if(args[4].equals("1"))
+//            {
+//              // debug level 1
+//            }
+//            else
+//            {
+//              printUsageAndExit();
+//            }
+//          }
+//        }
+//        /* cache and debug */
+//        else if(args.length == 6)
+//        {
+//          if(cacheCall.equals("1"))
+//          {
+//            useCache = true;
+//          }
+//          else
+//          {
+//            printUsageAndExit();
+//          }
+//        }
+//        /* args < 4 or args > 6 */
+//        else
+//        {
+//          printUsageAndExit();
+//        }
 
-        String searchList = Parse("data/files_gbk/test3.gbk");
+//        String searchList = Parse("file.txt");
+        String searchList = Parse(gbkFile);
 
         cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args); // ??
 //        int sequenceLength = 3; // change after everything works
+
         /* break data into sequence length group */
         for(int i = 0; i < searchList.length() - sequenceLength+1; i++)
         {
@@ -125,24 +101,12 @@ public class GeneBankCreateBTree
                 currStr += searchList.charAt(i + j);
             }
 
-            System.out.println(currStr);
+//            System.out.println(currStr);
             long newData = dnaToLong(currStr);
 //            System.out.println(newData);
-//            TreeObject newObject = new TreeObject(newData);
             workingBTree.BTreeInsert(newData);
-//            System.out.println("this is before the change back");
-//            newObject.toString();
-//            if()
-//            {
-//
-//            }
-//            System.out.println("searchList =>" + i + " " + searchList.charAt(i));
-
-//            for(int j = 0; j < searchList.get(i).size(); j++)
-//            {
-//
-//            }
         }
+        workingBTree.dump("dumptest.txt");
 
     }
 
