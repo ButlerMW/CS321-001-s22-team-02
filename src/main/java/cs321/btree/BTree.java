@@ -304,12 +304,15 @@ public class BTree
           int i = this.size;
           if(this.isLeaf)
           {
-              // Check for duplicates
-              if(i > 0 && this.keys[i].getDNA() == key)
+              for(int j = 1; j <= size; j++) // while loop
               {
-                  this.keys[i].increaseFrequency();
-                  this.DiskWrite();
-                  return;
+                  // Check for duplicates
+                  if(j > 0 && this.keys[j].getDNA() == key)
+                  {
+                      this.keys[j].increaseFrequency();
+                      this.DiskWrite();
+                      return;
+                  }
               }
             while(i >= 1 && key < this.keys[i].getDNA())
             {

@@ -7,7 +7,7 @@ public class TreeObject
     private int frequency;
 
     public TreeObject(long DNA){
-        this.frequency = 0;
+        this.frequency = 1;
         this.DNA = DNA;
     }
     
@@ -36,7 +36,7 @@ public class TreeObject
         String retVal = "";
         String biString = Long.toBinaryString(DNA);
         while(biString.length() < 2*numK){
-            biString += "0";
+            biString = "0" + biString;
         }
         for(int i = 0; i < biString.length(); i+=2){
             if(biString.substring(i, i + 2).equals("00")){

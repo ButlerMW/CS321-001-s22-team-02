@@ -34,6 +34,7 @@ public class GeneBankCreateBTree
       int degreeCall = 3; // Integer.parseInt(args[1]);
       String gbkFile = "data/files_gbk/test0.gbk"; // args[2];
       int sequenceLength = 4; // Integer.parseInt(args[3]);
+        String dumpFileName = "gbkFile.test0." + "btree.dump" + sequenceLength;
 
       BTree workingBTree = null;
       workingBTree = new BTree(degreeCall, "testRAF", 0, sequenceLength); // degree, gbk file,
@@ -106,8 +107,8 @@ public class GeneBankCreateBTree
 //            System.out.println(newData);
             workingBTree.BTreeInsert(newData);
         }
-        workingBTree.dump("dumptest.txt");
-
+//        workingBTree.dump("dumptest.txt");
+        workingBTree.dump(dumpFileName);
     }
 
     /**
@@ -126,26 +127,28 @@ public class GeneBankCreateBTree
             if(c == 'a' || c == 'A')
             {
                 retVal += 0;
-                retVal = retVal<<2;
             }
             else if(c == 't' || c == 'T')
             {
                 retVal += 3;
-                retVal = retVal<<2;
+
             }
             else if(c == 'c' || c == 'C')
             {
                 retVal += 1;
-                retVal = retVal<<2;
+
             }
             else if(c == 'g' || c == 'G')
             {
                 retVal += 2;
-                retVal = retVal<<2;
             }
             else
             {
                 return -1;
+            }
+            if(i < DNA.length()-1)
+            {
+                retVal = retVal<<2;
             }
         }
         return retVal;
