@@ -74,7 +74,7 @@ public class GeneBankSearchBTree
     /**
      * BTree constructor
      */
-    public static void BTr(RandomAccessFile raf) throws IOException
+    public static void BTree(RandomAccessFile raf) throws IOException
     {
         raf.seek(0);
         int degree = raf.readInt();
