@@ -13,9 +13,8 @@ public class GeneBankSearchBTree
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
 
-        boolean useCache; // 0 no/false 1 with cache/true
+        boolean useCache = false; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
-        String queryFile = args[2];
 
 //      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
 
@@ -30,7 +29,24 @@ public class GeneBankSearchBTree
             printUsage();
         }
 
+        if(args[1].equals("")){
+            // optimum degree based on disk block size of 4096
+            return;
+        }
+
+        if(args[2].equals("")){
+            return;
+        }
+
+        if(args[3].equals("")){
+            return;
+        }
+
         if(args[4].equals("0")){
+            return;
+        }
+
+        if(args[5].equals("")){
             return;
         }
        
