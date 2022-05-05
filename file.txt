@@ -16,4 +16,9 @@ NN USELESS
 TAC
 //
 
-Parse() should return ACGCT, ACT, TAC, GGG
+ORIGIN
+ACTG
+//
+
+
+Parse() should return ACGCTACTTACGGG

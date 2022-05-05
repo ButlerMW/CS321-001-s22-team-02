@@ -2,12 +2,13 @@
 package cs321.btree;
 
 //import main.java.cs321.btree.BTree;
+
+import main.java.cs321.btree.BTree;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 public class BTreeTest
 {

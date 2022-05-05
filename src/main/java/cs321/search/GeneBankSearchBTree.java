@@ -1,9 +1,7 @@
-//package main.java.cs321.search;
-package cs321.search;
-import cs321.btree.BTree;
-
-import cs321.btree.BTree;
-import cs321.btree.TreeObject;
+package main.java.cs321.search;
+//package cs321.search;
+//import cs321.btree.BTree;
+import main.java.cs321.btree.BTree;
 
 import java.io.*;
 import java.util.Scanner;

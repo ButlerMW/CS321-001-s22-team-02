@@ -1,18 +1,23 @@
-//package main.java.cs321.create;
-package cs321.create;
+package main.java.cs321.create;
+//package cs321.create;
 
-import cs321.btree.BTree;
-import cs321.btree.TreeObject;
-import cs321.common.ParseArgumentException;
-import cs321.search.GeneBankSearchBTree;
+//import cs321.btree.BTree;
+//import cs321.btree.TreeObject;
+//import cs321.common.ParseArgumentException;
+//import cs321.search.GeneBankSearchBTree;
+
+import main.java.cs321.btree.BTree;
+import main.java.cs321.common.ParseArgumentException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 /**
  * Use a string that takes in everything from ORIGIN to // and add ATCG and N to a string.
@@ -36,7 +41,7 @@ public class GeneBankCreateBTree
         int sequenceLength = Integer.parseInt(args[3]); // test number 1 <= k <= 31
         String dumpFileName = gbkFile + "btree.myTestDump." + sequenceLength;
 
-      BTree workingBTree = null; // default to null?
+        BTree workingBTree = null; // default to null?
 //      workingBTree = new BTree(degreeCall, "testRAF", 500, sequenceLength);
 
         /* check cacheCall */
@@ -387,5 +392,34 @@ public class GeneBankCreateBTree
         }
 
         return patterns;
+    }
+
+
+
+
+    public void GeneBankCreateDatabase(File dump){
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+            Scanner file = new Scanner(dump);
+            Statement s = connection.createStatement();
+            s.executeQuery("CREATE TABLE DNA (key varchar(10), frequency int);");
+            String value = "";
+            int freq = 0;
+
+            while (file.hasNextLine()){
+                Scanner line = new Scanner(file.nextLine());
+                value = line.next();
+                freq = line.nextInt();
+
+                value = value.stripTrailing();
+
+                s.executeQuery("insert into DNA (key, frequency) values (value, freq);");
+            }
+
+
+        } catch (SQLException | FileNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }

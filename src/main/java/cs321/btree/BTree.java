@@ -1,5 +1,5 @@
-//package main.java.cs321.btree;
-package cs321.btree;
+package main.java.cs321.btree;
+//package cs321.btree;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class BTree
   private RandomAccessFile raf;
 //  private FileChannel fc;
    // private long sequenceLength; // sequence length
-  private Cache<Long, BTreeNode> BTreeCache;
+  private cs321.btree.Cache<Long, BTreeNode> BTreeCache;
   private int sequenceLength;
 
   /**
@@ -44,7 +44,7 @@ public class BTree
     sizeOfBTreeNode = 4 + 8 + 2 + (2*degree -1)*12 + 16*degree; // calulate later
       nextAddress = 24 + sizeOfBTreeNode;
     numOfNodes = 1;
-    this.BTreeCache = new Cache<>(cacheSize);
+    this.BTreeCache = new cs321.btree.Cache<>(cacheSize);
     this.sequenceLength = sequenceLength;
 
     try
@@ -77,7 +77,7 @@ public class BTree
 //    nextAddress = 0;
         int sizeOfBTreeNode = 1000; // calulate later (degree)
         numOfNodes = 1;
-        this.BTreeCache = new Cache<>(cacheSize);
+        this.BTreeCache = new cs321.btree.Cache<>(cacheSize);
 
         try
         {
