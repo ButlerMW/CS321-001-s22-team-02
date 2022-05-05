@@ -16,8 +16,8 @@ public class BTree
 {
   private BTreeNode root;
   private int degree;
-  private long nextAddress = 1000;
-  private int sizeOfBTreeNode = 1000; // calulate later
+  private long nextAddress; // test number 1000
+  private int sizeOfBTreeNode; // test number 1000 calulate later
   private int numOfNodes;
   private RandomAccessFile raf;
 //  private FileChannel fc;
@@ -40,9 +40,9 @@ public class BTree
       this.degree = degree;
     }
     root = new BTreeNode(true, 24);
-    nextAddress = 24 + sizeOfBTreeNode;
 //    nextAddress = 0;
-    int sizeOfBTreeNode = 4 + 8 + 2 + (2*degree -1)*12 + 16*degree; // calulate later
+    sizeOfBTreeNode = 4 + 8 + 2 + (2*degree -1)*12 + 16*degree; // calulate later
+      nextAddress = 24 + sizeOfBTreeNode;
     numOfNodes = 1;
     this.BTreeCache = new Cache<>(cacheSize);
     this.sequenceLength = sequenceLength;

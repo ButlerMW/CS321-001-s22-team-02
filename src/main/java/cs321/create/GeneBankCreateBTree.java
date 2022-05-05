@@ -28,18 +28,106 @@ public class GeneBankCreateBTree
 
     public static void main(String[] args) throws Exception
     {
-      String cacheCall = "0"; // args[0]
-      boolean useCache = false;
-      int cacheSize = 0;
-      int degreeCall = 3; // Integer.parseInt(args[1]);
-      String gbkFile = "data/files_gbk/test0.gbk"; // args[2];
-      int sequenceLength = 4; // Integer.parseInt(args[3]);
-        String dumpFileName = "gbkFile.test0." + "btree.dump" + sequenceLength;
+        String cacheCall = args[0]; // test numbers 0, 1
+        int debug = 0; // default number
+        int cacheSize = 0; // default to 0 // test number 0, 100, 500
+        int degreeCall = Integer.parseInt(args[1]);
+        String gbkFile = args[2]; // test 
+        int sequenceLength = Integer.parseInt(args[3]); // test number 1 <= k <= 31
+        String dumpFileName = gbkFile + "btree.myTestDump." + sequenceLength;
 
-      BTree workingBTree = null;
-      workingBTree = new BTree(degreeCall, "testRAF", 0, sequenceLength); // degree, gbk file,
+      BTree workingBTree = null; // default to null?
+//      workingBTree = new BTree(degreeCall, "testRAF", 500, sequenceLength);
 
-//        /* check args */
+        /* check cacheCall */
+        if(!cacheCall.equals("0") && !cacheCall.equals("1"))
+        {
+            System.out.println("check 0");
+            printUsageAndExit();
+        }
+
+        /* check if sequence length is in the correct range */
+        if(sequenceLength < 1 || sequenceLength > 31)
+        {
+            System.out.println("First Check");
+            printUsageAndExit();
+        }
+
+        // if outside of range
+        if(args.length < 4 || args.length > 6)
+        {
+            System.out.println("check 1");
+            printUsageAndExit();
+        }
+
+        // no cache and no debug check
+        if(args.length == 4 && !cacheCall.equals("0"))
+        {
+            System.out.println("Second Check");
+            printUsageAndExit();
+        }
+
+        // cache or debug
+        if(args.length == 5 && cacheCall.equals("0"))
+        {
+            if(args[4].equals("0") || args[4].equals("1"))
+            {
+                debug = Integer.parseInt(args[4]);
+            }
+            else if(cacheCall.equals("1"))
+            {
+                cacheSize = Integer.parseInt(args[4]);
+            }
+        }
+
+        // cache and debug
+        if(args.length == 6)
+        {
+            if(cacheCall.equals("1"))
+            {
+                cacheSize = Integer.parseInt(args[4]);
+            }
+            else if(!cacheCall.equals("0"))
+            {
+                System.out.println("Fifth Check");
+                printUsageAndExit();
+            }
+            if(args[5].equals("0") || args[5].equals("1"))
+            {
+                debug = Integer.parseInt(args[5]);
+            }
+        }
+
+        // /* check if args length is in appropriate range */
+        // if(args.length >= 4 || args.length <= 6)
+        // {
+        /* no cache and no debug */
+        /* cache or debug */
+        //   if(args.length == 5 && cacheCall.equals("0"))
+        //   {
+        //       else
+        //       {
+        // System.out.println("Third Check");
+        //           printUsageAndExit();
+        //       }
+        //   }
+        //   else if(cacheCall.equals("1"))
+        // else
+        // {
+
+        //     printUsageAndExit();
+        // }
+        /* cache and debug */
+        // }
+        // else
+        // {
+        //   System.out.println("Seventh Check");
+        //     printUsageAndExit();
+        // }
+
+        workingBTree = new BTree(degreeCall, "testRAF", cacheSize, sequenceLength);
+
+//        /* check if args length is in correct range */
 //        /* no cache and no debug */
 //        if(args.length == 4)
 //        {
@@ -47,7 +135,7 @@ public class GeneBankCreateBTree
 //          {
 //            printUsageAndExit();
 //          }
-//          workingBTree = new BTree(degreeCall, gbkFile, 0); // degree, gbk file,
+//          workingBTree = new BTree(degreeCall, "", 0, sequenceLength); // degree, gbk file,
 //        }
 //        /* cache or debug */
 //        else if(args.length == 5)
@@ -56,11 +144,14 @@ public class GeneBankCreateBTree
 //          {
 //            if(args[4].equals("0"))
 //            {
-//              // debug level 0
+//              // debug to args[4]
+//                debug = Integer.parseInt(args[4]);
 //            }
 //            else if(args[4].equals("1"))
 //            {
 //              // debug level 1
+////                debug = 1;
+//                cacheSize = args[4];
 //            }
 //            else
 //            {
@@ -73,7 +164,7 @@ public class GeneBankCreateBTree
 //        {
 //          if(cacheCall.equals("1"))
 //          {
-//            useCache = true;
+//
 //          }
 //          else
 //          {
@@ -87,28 +178,49 @@ public class GeneBankCreateBTree
 //        }
 
 //        String searchList = Parse("file.txt");
-        String searchList = Parse(gbkFile);
-
+//        String searchList = Parse(gbkFile);
+        List segments = Parse(gbkFile);
         cs321.create.GeneBankCreateBTreeArguments geneBankCreateBTreeArguments = parseArgumentsAndHandleExceptions(args); // ??
 //        int sequenceLength = 3; // change after everything works
 
-        /* break data into sequence length group */
-        for(int i = 0; i < searchList.length() - sequenceLength+1; i++)
+        /* break data into sequence length groups */
+        int index = 0;
+        while(index < segments.size())
         {
-            /* Creating the subsequences */
-            String currStr = "";
-            for(int j = 0; j < sequenceLength; j++)
+            String searchList = (String) segments.get(index);
+            for(int i = 0; i < searchList.length() - sequenceLength+1; i++)
             {
-                currStr += searchList.charAt(i + j);
-            }
+                /* Creating the subsequences */
+                String currStr = "";
+                for(int j = 0; j < sequenceLength; j++)
+                {
+                    currStr += searchList.charAt(i + j);
+                }
 
 //            System.out.println(currStr);
-            long newData = dnaToLong(currStr);
+                long newData = dnaToLong(currStr);
 //            System.out.println(newData);
-            workingBTree.BTreeInsert(newData);
+                workingBTree.BTreeInsert(newData);
+            }
+            index++;
         }
+
 //        workingBTree.dump("dumptest.txt");
-        workingBTree.dump(dumpFileName);
+        /* Debug results */
+        if(debug == 0)
+        {
+            System.out.println("Debug selction: " + debug);
+            System.out.println("java GeneBankCreate <0/1(no/with Cache)> <degree> <gbk file> <sequence length> [<cache size>] [<debug level>]");
+            System.out.println("Possible exceptions to be thrown: \n\tFileNotFound \n\tIOException");
+        }
+        if(debug == 1)
+        {
+            workingBTree.dump("linkedlistback" + dumpFileName);
+        }
+        else
+        {
+            printUsageAndExit();
+        }
     }
 
     /**
@@ -120,7 +232,6 @@ public class GeneBankCreateBTree
     public static long dnaToLong(String DNA)
     {
         long retVal = 0;
-
         for(int i = 0; i < DNA.length(); i++)
         {
             char c = DNA.charAt(i);
@@ -131,12 +242,10 @@ public class GeneBankCreateBTree
             else if(c == 't' || c == 'T')
             {
                 retVal += 3;
-
             }
             else if(c == 'c' || c == 'C')
             {
                 retVal += 1;
-
             }
             else if(c == 'g' || c == 'G')
             {
@@ -192,32 +301,27 @@ public class GeneBankCreateBTree
     }
 
     /**
-     * New Parse Method
+     * Parse Method
      * @param name
      * @return
      * @throws FileNotFoundException
      */
-    public static String Parse (String name) throws FileNotFoundException
+    public static List <String> Parse (String name) throws FileNotFoundException
     {
         File file = new File (name);
         Scanner scan = new Scanner (file);
-//        List segments = new LinkedList();
-        String segments = "";
+        List segments = new LinkedList();
         String returnString = "";
         while (scan.hasNextLine())
         {
             String line = scan.nextLine();
             if (line.contains("ORIGIN"))
             {
-//                scan.useDelimiter("[^1234567890acntgACNTG /]+");
-
                 while (scan.hasNextLine())
                 {
-
                     String str = scan.nextLine();
                     if (!str.contains("//") && !str.equals(" "))
                     {
-//                        returnString = "";
                         if(str.contains(" "))
                         {
                             for(int i = 0; i < str.length(); i++)
@@ -227,100 +331,29 @@ public class GeneBankCreateBTree
                                     returnString += str.charAt(i);
                                 }
                             }
-//                            System.out.println(str);
                         }
                         else
                         {
                             returnString = str;
                         }
-//                        segments.add(returnString); // removing linked list
                     }
                     else
                     {
-//                        System.out.println(str);
                         Scanner strScan = new Scanner(returnString);
                         strScan.useDelimiter("nn*");
                         while(strScan.hasNext())
                         {
                             String testPrint = strScan.next();
-//                            segments.add(testPrint);
-                            segments += testPrint;
+                            segments.add(testPrint);
                         }
                         returnString = "";
                         break;
                     }
                 }
-//                scan.useDelimiter(Pattern.compile("\\n"));
             }
         }
-//        segments.add(returnString);
         return segments;
     }
-    /* END OF NEW PARSE */
-
-//    /**
-//     * Parse Method
-//     * @param name
-//     * @return
-//     * @throws FileNotFoundException
-//     */
-//    public static List <String> Parse (String name) throws FileNotFoundException
-//    {
-//        File file = new File (name);
-//        Scanner scan = new Scanner (file);
-//        List segments = new LinkedList();
-//        String returnString = "";
-//        while (scan.hasNextLine())
-//        {
-//            String line = scan.nextLine();
-//            if (line.contains("ORIGIN"))
-//            {
-////                scan.useDelimiter("[^1234567890acntgACNTG /]+");
-//
-//                while (scan.hasNextLine())
-//                {
-//
-//                    String str = scan.nextLine();
-//                    if (!str.contains("//") && !str.equals(" "))
-//                    {
-////                        returnString = "";
-//                        if(str.contains(" "))
-//                        {
-//                            for(int i = 0; i < str.length(); i++)
-//                            {
-//                                if (!"1234567890 /\n".contains(String.valueOf(str.charAt(i))))
-//                                {
-//                                    returnString += str.charAt(i);
-//                                }
-//                            }
-////                            System.out.println(str);
-//                        }
-//                        else
-//                        {
-//                            returnString = str;
-//                        }
-////                        segments.add(returnString); // removing linked list
-//                    }
-//                    else
-//                    {
-////                        System.out.println(str);
-//                        Scanner strScan = new Scanner(returnString);
-//                        strScan.useDelimiter("nn*");
-//                        while(strScan.hasNext())
-//                        {
-//                            String testPrint = strScan.next();
-//                            segments.add(testPrint);
-//                        }
-//                        returnString = "";
-//                        break;
-//                    }
-//                }
-////                scan.useDelimiter(Pattern.compile("\\n"));
-//            }
-//        }
-////        segments.add(returnString);
-//        return segments;
-//    }
 
     //
 
