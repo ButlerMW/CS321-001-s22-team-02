@@ -10,6 +10,7 @@ public class GeneBankSearchBTree
 {
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
+<<<<<<< Updated upstream
 
         boolean useCache = false; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
@@ -31,6 +32,11 @@ public class GeneBankSearchBTree
         else{
             printUsage();
         }
+=======
+        boolean useCache; // 0 = no/false : 1 = with cache/true
+        String btreeFile = args[1];
+        int sequenceLength = Integer.parseInt(args[3]); // integer between 1 and 31
+>>>>>>> Stashed changes
 
 
         if(useCache && args.length >= 4){
