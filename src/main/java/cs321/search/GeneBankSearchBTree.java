@@ -11,6 +11,7 @@ public class GeneBankSearchBTree
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
 
+
         boolean useCache = false; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
         int cacheSize = 0;
@@ -32,6 +33,7 @@ public class GeneBankSearchBTree
         else{
             printUsage();
         }
+
 
 
 
