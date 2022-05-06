@@ -10,13 +10,13 @@ public class GeneBankSearchBTree
 {
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
-<<<<<<< Updated upstream
 
         boolean useCache = false; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
         int cacheSize = 0;
 
 //      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
+
 
         if(args.length < 3 || args.length > 5){
             printUsage();
@@ -32,11 +32,7 @@ public class GeneBankSearchBTree
         else{
             printUsage();
         }
-=======
-        boolean useCache; // 0 = no/false : 1 = with cache/true
-        String btreeFile = args[1];
-        int sequenceLength = Integer.parseInt(args[3]); // integer between 1 and 31
->>>>>>> Stashed changes
+
 
 
         if(useCache && args.length >= 4){

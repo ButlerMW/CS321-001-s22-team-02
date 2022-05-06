@@ -50,20 +50,17 @@ public class BTree
     try
     {
         raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-<<<<<<< Updated upstream
        raf.seek(0);
        raf.writeInt(degree);
        raf.writeLong(24);
        raf.writeInt(sizeOfBTreeNode);
        raf.writeLong(nextAddress);
 
-=======
 //        raf.seek(0);
 //        raf.writeInt(degree);
 //        raf.writeLong(0);
 //        raf.writeInt(sizeOfBTreeNode);
 //        raf.writeLong(nextAddress);
->>>>>>> Stashed changes
     }
     catch (Exception e)
     {
@@ -73,19 +70,12 @@ public class BTree
   }
 
     /**
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
      * BTree constructor
      * Gene Bank
      * @throws IOException
      */
     public BTree(String file) throws IOException, FileNotFoundException
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     {
         raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
         raf.seek(0);
@@ -93,10 +83,7 @@ public class BTree
         raf.writeLong(0);
         raf.writeInt(sizeOfBTreeNode);
         raf.writeLong(nextAddress);
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     }
 
     /**
