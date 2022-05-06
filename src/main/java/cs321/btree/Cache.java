@@ -1,4 +1,3 @@
-//package main.java.cs321.btree;
 package cs321.btree;
 
 import java.util.LinkedList;
@@ -10,7 +9,7 @@ public class Cache<T, E> // T = search key E = what to store
   private int size;
 
   /**
-   * 
+   *
    * @param size
    */
   public Cache(int size)
@@ -45,7 +44,7 @@ public class Cache<T, E> // T = search key E = what to store
   }
 
   /**
-   * Removes and returns E 
+   * Removes and returns E
    * @param target
    * @return
    */
@@ -70,5 +69,5 @@ public class Cache<T, E> // T = search key E = what to store
     searchKeys.clear();
     storedKeys.clear();
   }
-  
+
 }

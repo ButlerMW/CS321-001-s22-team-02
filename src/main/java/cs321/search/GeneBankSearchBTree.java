@@ -1,7 +1,6 @@
-package main.java.cs321.search;
-//package cs321.search;
-//import cs321.btree.BTree;
-import main.java.cs321.btree.BTree;
+package cs321.search;
+
+import cs321.btree.*;
 
 import java.io.*;
 import java.util.Scanner;
@@ -10,48 +9,47 @@ public class GeneBankSearchBTree
 {
     public static void main(String[] args) throws FileNotFoundException, Exception
     {
-
-
+        // long startTime = System.currentTimeMillis(); // start time for calulating run time
         boolean useCache = false; // 0 no/false 1 with cache/true
         String btreeFile = args[1];
         int cacheSize = 0;
 
-//      System.out.println("Hello world from cs321.search.GeneBankSearchBTree.main");
-
-
-        if(args.length < 3 || args.length > 5){
+        if(args.length < 3 || args.length > 5)
+        {
             printUsage();
         }
 
-
-        if(args[0].equals("1")){
+        if(args[0].equals("1"))
+        {
             useCache = true;
         }
-        else if(!args[0].equals("0")){
+        else if(args[0].equals("0"))
+        {
             useCache = false;
         }
-        else{
+        else
+        {
             printUsage();
         }
 
-
-
-
-        if(useCache && args.length >= 4){
+        if(useCache && args.length >= 4)
+        {
             cacheSize = Integer.parseInt(args[3]);
-            if(cacheSize <= 0){
+            if(cacheSize <= 0)
+            {
                 printUsage();
                 System.exit(1);
             }
         }
 
-        if(!useCache && args.length == 4 && args[4].equals("0") ){
+        if(!useCache && args.length == 4 && !args[3].equals("0"))
+        {
             printUsage();
         }
-       
-        Scanner file = new Scanner(new File(args[3]));
 
-        BTree searchTree = new BTree(btreeFile);
+        Scanner file = new Scanner(new File(args[2]));
+
+        BTree searchTree = new BTree(btreeFile, cacheSize);
         PrintStream logOut = System.out;
         PrintStream ps = new PrintStream("test"); //
 
@@ -59,31 +57,20 @@ public class GeneBankSearchBTree
         {
             String sequence = file.nextLine();
             long geneNum = dnaToLong(sequence);
-            //searchTree.search(geneNum, ps);
             int freq = searchTree.search(geneNum, ps);
-            //dump(searchTree);
-            if(freq != -1){
-                System.out.println(sequence + ": " + freq);
+            if(freq != -1)
+            {
+                System.out.println(sequence.toLowerCase() + ": " + freq);
             }
-            
-
         }
         System.setOut(ps);
         System.setOut(logOut);
-        
 
-    }
-
-    /**
-     * BTree constructor
-     */
-    public static void BTree(RandomAccessFile raf) throws IOException
-    {
-        raf.seek(0);
-        int degree = raf.readInt();
-        long root = raf.readLong();
-        int sizeOfBTreeNode = raf.readInt();
-        long nextAddress = raf.readLong();
+        // // Running Time Calculation
+        // long endTime = System.currentTimeMillis();
+        // System.out.println("start time: " + startTime);
+        // System.out.println("end time: " + endTime);
+        // System.out.println("total (calculated) run time : " + (endTime - startTime));
     }
 
     /**
@@ -92,36 +79,35 @@ public class GeneBankSearchBTree
     public static long dnaToLong(String DNA)
     {
         long retVal = 0;
-
         for(int i = 0; i < DNA.length(); i++)
         {
             char c = DNA.charAt(i);
             if(c == 'a' || c == 'A')
             {
                 retVal += 0;
-                retVal = retVal<<2;
             }
             else if(c == 't' || c == 'T')
             {
                 retVal += 3;
-                retVal = retVal<<2;
             }
             else if(c == 'c' || c == 'C')
             {
                 retVal += 1;
-                retVal = retVal<<2;
             }
             else if(c == 'g' || c == 'G')
             {
                 retVal += 2;
-                retVal = retVal<<2;
             }
             else
             {
                 return -1;
             }
+            if(i < DNA.length()-1)
+            {
+                retVal = retVal<<2;
+            }
         }
-        return-1;
+        return retVal;
     }
 
     public static void printUsage()
