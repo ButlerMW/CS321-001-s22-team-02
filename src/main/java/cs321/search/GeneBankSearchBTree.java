@@ -21,6 +21,7 @@ public class GeneBankSearchBTree
             printUsage();
         }
 
+
         if(args[0].equals("1")){
             useCache = true;
         }

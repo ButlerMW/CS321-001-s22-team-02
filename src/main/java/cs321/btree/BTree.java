@@ -55,6 +55,7 @@ public class BTree
        raf.writeLong(24);
        raf.writeInt(sizeOfBTreeNode);
        raf.writeLong(nextAddress);
+
     }
     catch (Exception e)
     {
@@ -64,43 +65,13 @@ public class BTree
   }
 
     /**
-     * BTree Contstructor
-     * For Btree test
-     * @param degree
-     * @param file
-     * @throws FileNotFoundException
-     */
-    public BTree(int degree, String file, int cacheSize) throws FileNotFoundException
-    {
-        this.degree = degree;
-        root = new BTreeNode(true, 0);
-//    nextAddress = 0;
-        int sizeOfBTreeNode = 1000; // calulate later (degree)
-        numOfNodes = 1;
-        this.BTreeCache = new cs321.btree.Cache<>(cacheSize);
 
-        try
-        {
-            raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-//        raf.seek(0);
-//        raf.writeInt(degree);
-//        raf.writeLong(0);
-//        raf.writeInt(sizeOfBTreeNode);
-//        raf.writeLong(nextAddress);
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error");
-            System.exit(1);
-        }
-    }
-
-    /**
      * BTree constructor
-     * Create Gene Bank
+     * Gene Bank
      * @throws IOException
      */
-    public BTree(int degree, String file) throws IOException
+    public BTree(String file) throws IOException, FileNotFoundException
+
     {
         raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
         raf.seek(0);
@@ -108,21 +79,7 @@ public class BTree
         raf.writeLong(0);
         raf.writeInt(sizeOfBTreeNode);
         raf.writeLong(nextAddress);
-    }
 
-    /**
-     * BTree constructor
-     * Search Gene Bank
-     * @throws IOException
-     */
-    public BTree(String file) throws IOException
-    {
-        raf = new RandomAccessFile(file, "rw"); // file cannot be resolved to a variableJava(33554515) file: ???; mode: "rw" = Read/Write;
-        raf.seek(0);
-        raf.writeInt(degree);
-        raf.writeLong(0);
-        raf.writeInt(sizeOfBTreeNode);
-        raf.writeLong(nextAddress);
     }
 
     /**
